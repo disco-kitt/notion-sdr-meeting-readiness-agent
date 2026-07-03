@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" modified="2026-07-02T21:03:30Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="01-master-journey-map" name="Master Journey Map">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2570" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Master Journey Map" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=24;fontStyle=1;fontColor=#2F3437;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="20" y="14" width="2490" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="From calendar signal to CRM follow-through" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontColor=#6B7280;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="20" y="48" width="2490" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-sdr" value="SDR" style="swimlane;horizontal=0;startSize=46;fillColor=#F7F7F5;swimlaneFillColor=#FFFFFF;strokeColor=#D3D1CB;fontStyle=1;fontSize=14;fontColor=#2F3437;rounded=1;arcSize=6;collapsible=0;html=1;whiteSpace=wrap;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="20" y="84" width="2530" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-system" value="System" style="swimlane;horizontal=0;startSize=46;fillColor=#EEF4FF;swimlaneFillColor=#FFFFFF;strokeColor=#9DBCFB;fontStyle=1;fontSize=14;fontColor=#2F3437;rounded=1;arcSize=6;collapsible=0;html=1;whiteSpace=wrap;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="20" y="224" width="2530" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-ai" value="AI / Orchestration" style="swimlane;horizontal=0;startSize=46;fillColor=#F4EEFF;swimlaneFillColor=#FFFFFF;strokeColor=#BEA7E5;fontStyle=1;fontSize=14;fontColor=#2F3437;rounded=1;arcSize=6;collapsible=0;html=1;whiteSpace=wrap;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="20" y="364" width="2530" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="lane-external" value="External Data" style="swimlane;horizontal=0;startSize=46;fillColor=#FFF4E5;swimlaneFillColor=#FFFFFF;strokeColor=#E7B86E;fontStyle=1;fontSize=14;fontColor=#2F3437;rounded=1;arcSize=6;collapsible=0;html=1;whiteSpace=wrap;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="20" y="504" width="2530" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="calendar" value="Calendar" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFF8EE;strokeColor=#C8872E;strokeWidth=1.5;fontColor=#62420F;" vertex="1" parent="lane-external">
+          <mxGeometry x="70" y="38" width="158" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="detected" value="Meeting Detected" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-system">
+          <mxGeometry x="260" y="38" width="158" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="research" value="Research Initiated" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-ai">
+          <mxGeometry x="450" y="38" width="158" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="overview" value="Overview" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="640" y="38" width="158" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="signals" value="Signals" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="830" y="38" width="158" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="stakeholders" value="Stakeholders" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="1020" y="38" width="158" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="questions" value="Discovery Questions" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="1210" y="38" width="158" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="recommendations" value="Recommendations" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="1400" y="38" width="158" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="brief" value="Meeting Brief" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="1590" y="38" width="158" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="meeting" value="Meeting" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFF8EE;strokeColor=#C8872E;strokeWidth=1.5;fontColor=#62420F;" vertex="1" parent="lane-external">
+          <mxGeometry x="1780" y="38" width="158" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="reflection" value="Post-Meeting Reflection" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="1970" y="38" width="176" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="crm" value="CRM Update" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=18;fillColor=#EAF7EE;strokeColor=#3B8C5A;strokeWidth=1.5;fontColor=#205C38;fontStyle=1;" vertex="1" parent="lane-external">
+          <mxGeometry x="2160" y="38" width="158" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="calendar" target="detected">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="detected" target="research">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="research" target="overview">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="overview" target="signals">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="signals" target="stakeholders">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="stakeholders" target="questions">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="questions" target="recommendations">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="recommendations" target="brief">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="brief" target="meeting">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="meeting" target="reflection">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="reflection" target="crm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

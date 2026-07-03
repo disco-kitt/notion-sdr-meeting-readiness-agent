@@ -1,0 +1,41 @@
+flowchart LR
+  subgraph SDR[SDR]
+    direction LR
+    generate([Generate Brief])
+    edit([Edit Brief<br/>Reorder • Remove • Add notes]) --> choice{Delivery Choice}
+  end
+  subgraph SYS[System]
+    direction LR
+    draft([Keep Draft])
+    notify([Notify AE])
+    shared_status([Brief Shared])
+    draft_status([Brief Draft])
+    ready([Meeting Ready])
+  end
+  subgraph AI[AI / Orchestration]
+    direction LR
+    assemble([Assemble Draft])
+  end
+  subgraph EXT[External Data]
+    direction LR
+    notion([Copy into Notion])
+    share([Share with AE])
+    export([Export])
+  end
+  generate --> assemble --> edit
+  choice -- Copy --> notion --> shared_status
+  choice -- Share --> share --> notify --> shared_status
+  choice -- Export --> export --> shared_status
+  choice -- Draft --> draft --> draft_status
+  shared_status --> ready
+  draft_status --> ready
+  class generate,edit,notify,assemble action;
+  class choice decision;
+  class notion,share,export external;
+  class draft,draft_status secondary;
+  class shared_status,ready status;
+classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
+classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
+classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;
+classDef external fill:#FFF8EE,stroke:#C8872E,stroke-width:1.5px,color:#62420F;
+classDef secondary fill:#F3F4F6,stroke:#8A9099,stroke-width:1.25px,color:#40454C;

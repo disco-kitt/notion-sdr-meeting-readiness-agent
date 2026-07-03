@@ -1,0 +1,40 @@
+flowchart LR
+  subgraph SDR[SDR]
+    direction LR
+    record([Record Reflection<br/>Priorities • Objections • Next steps]) --> label([Label Assumptions<br/>Correct • Incorrect • Unknown])
+    review{Review CRM Draft}
+    approve([Approve])
+    edit([Edit])
+    discard([Discard])
+  end
+  subgraph SYS[System]
+    direction LR
+    prompt([Reflection Prompt])
+    discarded([Discard CRM Draft])
+  end
+  subgraph AI[AI / Orchestration]
+    direction LR
+    crm_draft([Draft CRM Updates])
+    revise([Revise CRM Draft])
+    refine([Refine Future Recommendations])
+  end
+  subgraph EXT[External Data]
+    direction LR
+    meeting_end([Meeting Ends])
+    apply([Apply CRM Updates])
+  end
+  meeting_end --> prompt --> record
+  label --> crm_draft --> review
+  review -- Approve --> approve --> apply --> refine
+  review -- Edit --> edit --> revise -->|Review again| review
+  review -- Discard --> discard --> discarded --> refine
+  class record,label,approve,edit,prompt,crm_draft,revise action;
+  class review decision;
+  class meeting_end,apply external;
+  class discard,discarded secondary;
+  class refine status;
+classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
+classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
+classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;
+classDef external fill:#FFF8EE,stroke:#C8872E,stroke-width:1.5px,color:#62420F;
+classDef secondary fill:#F3F4F6,stroke:#8A9099,stroke-width:1.25px,color:#40454C;
