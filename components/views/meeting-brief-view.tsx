@@ -121,7 +121,7 @@ export function MeetingBriefView({
               {blocks.map((block) => (
                 <Reorder.Item key={block.id} value={block} className="group flex gap-2 rounded-lg border border-transparent p-3 hover:border-[#e8e7e4] hover:bg-[#fcfcfb]">
                   <span className="mt-1 cursor-grab text-muted-foreground/45 active:cursor-grabbing" aria-hidden="true"><GripVertical className="size-4" /></span>
-                  <div className="min-w-0 flex-1"><h3 className="mb-2 text-sm font-semibold">{block.title}</h3><EditableText value={block.body} onChange={(value) => updateBlock(block.id, value)} /></div>
+                  <div className="min-w-0 flex-1"><h3 className="mb-2 text-sm font-semibold">{block.title}</h3><EditableText label={block.title} value={block.body} onChange={(value) => updateBlock(block.id, value)} /></div>
                   <Button variant="ghost" size="icon" className="size-8 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100" aria-label={`Remove ${block.title}`} onClick={() => setBlocks((current) => current.filter((item) => item.id !== block.id))}><Trash2 className="size-3.5" /></Button>
                 </Reorder.Item>
               ))}

@@ -1,15 +1,27 @@
 "use client";
 
+import * as React from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Check, Network, Sparkles, UserRoundCheck } from "lucide-react";
+import { AlertCircle, Check, Network, Sparkles, UserRoundCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { stakeholders } from "@/lib/mock-data";
 
-export function StakeholdersView({ progress, reviewed, onReviewed }: { progress: number; reviewed: boolean; onReviewed: () => void }) {
+type StakeholderRole = "Decision maker" | "Champion" | "Evaluator" | "Unknown";
+
+export function StakeholdersView({ progress, reviewed, onReviewed, onRolesChanged }: { progress: number; reviewed: boolean; onReviewed: () => void; onRolesChanged: () => void }) {
   const reduceMotion = useReducedMotion();
+  const [roles, setRoles] = React.useState<Record<string, StakeholderRole>>(() => Object.fromEntries(stakeholders.map((person) => [person.name, person.influence])));
+  const changedCount = stakeholders.filter((person) => roles[person.name] !== person.influence).length;
+  const unknownCount = Object.values(roles).filter((role) => role === "Unknown").length;
+
+  const updateRole = (name: string, role: StakeholderRole) => {
+    setRoles((current) => ({ ...current, [name]: role }));
+    onRolesChanged();
+  };
+
   return (
     <div className="workspace-view max-w-[1180px]">
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div><h2 className="workspace-heading">Stakeholder map</h2><p className="workspace-description">Who is in the room, what they likely care about, and how influence may flow.</p></div><Button className="self-start" variant={reviewed ? "secondary" : "default"} size="sm" onClick={onReviewed} aria-pressed={reviewed}><Check />{reviewed ? "Roles confirmed" : "Confirm stakeholder roles"}</Button></div>
@@ -21,12 +33,31 @@ export function StakeholdersView({ progress, reviewed, onReviewed }: { progress:
           {stakeholders.map((person, index) => (
             <motion.div key={person.name} initial={reduceMotion ? false : { opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.18, delay: reduceMotion ? 0 : index * 0.04 }} className="relative rounded-lg border border-[#e8e7e4] bg-white p-4">
               <div className="flex items-start gap-3"><div className={`relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${person.color}`}>{person.initials}</div><div className="min-w-0 flex-1"><div className="font-semibold">{person.name}</div><div className="mt-0.5 text-xs text-muted-foreground">{person.role}</div></div></div>
-              <Badge variant={person.influence === "Decision maker" ? "violet" : person.influence === "Champion" ? "green" : "secondary"} className="mt-4">{person.influence}</Badge>
+              <label className="mt-4 block text-[10px] font-medium uppercase tracking-[0.07em] text-muted-foreground" htmlFor={`role-${person.initials}`}>Buying role</label>
+              <select
+                id={`role-${person.initials}`}
+                aria-label={`Buying role for ${person.name}`}
+                value={roles[person.name]}
+                onChange={(event) => updateRole(person.name, event.target.value as StakeholderRole)}
+                className="mt-1.5 min-h-9 w-full rounded-md border border-input bg-white px-2.5 py-1.5 text-sm font-medium shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2383E2]/50"
+              >
+                <option>Decision maker</option>
+                <option>Champion</option>
+                <option>Evaluator</option>
+                <option>Unknown</option>
+              </select>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">{person.note}</p>
             </motion.div>
           ))}
         </CardContent>
       </Card>
+
+      {(changedCount > 0 || unknownCount > 0) && (
+        <div className="mb-5 flex items-start gap-2.5 rounded-lg border border-[#ead7ad] bg-[#fffaf0] px-3 py-2.5 text-xs leading-5 text-[#76571f]" role="status">
+          <AlertCircle className="mt-0.5 size-3.5 shrink-0" />
+          <span>{changedCount > 0 ? `${changedCount} ${changedCount === 1 ? "role differs" : "roles differ"} from the AI suggestion.` : ""}{changedCount > 0 && unknownCount > 0 ? " " : ""}{unknownCount > 0 ? `${unknownCount} ${unknownCount === 1 ? "role remains" : "roles remain"} unverified.` : ""} Confirm when this buying-group view is accurate enough to use.</span>
+        </div>
+      )}
 
       <div className="grid gap-5 lg:grid-cols-[1fr_340px]">
         <Card>

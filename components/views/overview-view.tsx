@@ -49,6 +49,49 @@ const recentChanges = [
   },
 ];
 
+const narrativeSources = [
+  {
+    id: "salesforce-account",
+    title: "Acme account activity",
+    date: "July 2, 2026",
+    location: "Salesforce · Account activity",
+    href: "https://www.salesforce.com/",
+    evidence: "Three executive-workflow touches were logged in the six weeks before this meeting.",
+  },
+  {
+    id: "linkedin-cro",
+    title: "Maya Chen joined Acme as CRO",
+    date: "May 21, 2026",
+    location: "LinkedIn · Leadership update",
+    href: "https://www.linkedin.com/",
+    evidence: "Maya’s role update identifies Acme and a start date six weeks before the meeting.",
+  },
+  {
+    id: "acme-enterprise",
+    title: "Acme launches enterprise plan",
+    date: "June 21, 2026",
+    location: "Acme blog · Product announcement",
+    href: "https://www.acme.com/",
+    evidence: "The launch adds approval workflows, audit logs, and cross-team workspaces for distributed teams.",
+  },
+  {
+    id: "acme-careers",
+    title: "Revenue Operations openings",
+    date: "Updated July 1, 2026",
+    location: "Acme careers · Revenue Operations",
+    href: "https://www.acme.com/careers",
+    evidence: "Five open roles across three regions emphasize process standardization and rep productivity.",
+  },
+  {
+    id: "q2-expansion",
+    title: "Q2 enterprise expansion update",
+    date: "June 29, 2026",
+    location: "Acme newsroom · Company update",
+    href: "https://www.acme.com/",
+    evidence: "Leadership names multi-product adoption and executive visibility as FY26 priorities.",
+  },
+];
+
 export function OverviewView({
   progress,
   notify,
@@ -96,13 +139,25 @@ export function OverviewView({
                 </div>
               </CardHeader>
               <CardContent>
-                <EditableText value={summary} onChange={(value) => { setSummary(value); notify("Why-now narrative updated"); }} />
+                <EditableText label="Why this meeting, why now" value={summary} onChange={(value) => { setSummary(value); notify("Why-now narrative updated"); }} />
 
                 <AnimatePresence initial={false}>
                   {showEvidence && (
                     <motion.div initial={reduceMotion ? false : { opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={reduceMotion ? undefined : { opacity: 0, height: 0 }} className="overflow-hidden">
-                      <div className="mt-4 grid gap-2 border-t border-[#ecebe7] pt-3 sm:grid-cols-2">
-                        {["Salesforce · account activity", "LinkedIn · CRO role change", "Acme blog · enterprise launch", "Careers · RevOps expansion", "Q2 update · expansion priority"].map((source) => <div key={source} className="flex items-center gap-2 text-xs text-muted-foreground"><Check className="size-3 text-[#39865a]" />{source}</div>)}
+                      <div className="mt-4 space-y-2 border-t border-[#ecebe7] pt-3">
+                        {narrativeSources.map((source) => (
+                          <details key={source.id} className="group rounded-lg border border-[#e8e7e4] bg-[#fcfcfb] px-3 py-2.5">
+                            <summary className="flex cursor-pointer list-none items-start gap-2 text-xs [&::-webkit-details-marker]:hidden">
+                              <Check className="mt-0.5 size-3 shrink-0 text-[#39865a]" />
+                              <span className="min-w-0 flex-1"><span className="font-medium text-foreground">{source.title}</span><span className="mt-0.5 block text-muted-foreground">{source.location} · {source.date}</span></span>
+                              <ChevronDown className="mt-0.5 size-3.5 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+                            </summary>
+                            <div className="ml-5 mt-2 border-t border-[#ecebe7] pt-2 text-xs leading-5 text-muted-foreground">
+                              <p><span className="font-medium text-foreground">Evidence used:</span> “{source.evidence}”</p>
+                              <a aria-label={`Open source: ${source.title}`} className="mt-2 inline-flex items-center gap-1 font-medium text-[#1b6ca8] hover:underline" href={source.href} target="_blank" rel="noreferrer">Open source <ExternalLink className="size-3" /></a>
+                            </div>
+                          </details>
+                        ))}
                       </div>
                     </motion.div>
                   )}

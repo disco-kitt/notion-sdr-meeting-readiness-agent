@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Calendar, Check, Clock3, ExternalLink, MapPin, Sparkles, Video } from "lucide-react";
+import { Calendar, Check, ChevronRight, Clock3, ExternalLink, MapPin, Sparkles, Video } from "lucide-react";
 import type { BriefStatus } from "@/components/meeting-prep-app";
 import { OverviewView } from "@/components/views/overview-view";
 import { SignalsView } from "@/components/views/signals-view";
@@ -27,6 +27,7 @@ export function MeetingWorkspace({
   setSelectedQuestions,
   reviewedSections,
   onReviewSection,
+  onInvalidateSection,
   readiness,
   notify,
 }: {
@@ -43,9 +44,32 @@ export function MeetingWorkspace({
   setSelectedQuestions: (questions: string[]) => void;
   reviewedSections: string[];
   onReviewSection: (section: string) => void;
+  onInvalidateSection: (section: string) => void;
   readiness: MeetingReadiness;
   notify: (message: string) => void;
 }) {
+  const tabsScrollerRef = React.useRef<HTMLDivElement>(null);
+  const [canScrollTabs, setCanScrollTabs] = React.useState(false);
+
+  const updateTabOverflow = React.useCallback(() => {
+    const scroller = tabsScrollerRef.current;
+    if (!scroller) return;
+    setCanScrollTabs(scroller.scrollLeft + scroller.clientWidth < scroller.scrollWidth - 4);
+  }, []);
+
+  React.useEffect(() => {
+    const scroller = tabsScrollerRef.current;
+    if (!scroller) return;
+    const activeTrigger = scroller.querySelector<HTMLElement>('[data-state="active"]');
+    activeTrigger?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    const frame = window.requestAnimationFrame(updateTabOverflow);
+    window.addEventListener("resize", updateTabOverflow);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", updateTabOverflow);
+    };
+  }, [activeTab, updateTabOverflow]);
+
   return (
     <Tabs value={activeTab} onValueChange={onTabChange}>
       <section className="border-b border-[#e7e6e2] bg-white/70 px-4 pt-5 sm:px-7 sm:pt-8">
@@ -93,8 +117,8 @@ export function MeetingWorkspace({
           )}
 
           <div className="relative mt-4 sm:mt-5">
-            <div className="overflow-x-auto scrollbar-subtle">
-              <TabsList className="min-w-max gap-1 pr-7 sm:pr-0">
+            <div ref={tabsScrollerRef} onScroll={updateTabOverflow} className="overflow-x-auto scroll-smooth scrollbar-subtle [scroll-snap-type:x_proximity]">
+              <TabsList className="min-w-max gap-1 pr-16 sm:pr-0 [&>button]:[scroll-snap-align:start]">
                 <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="signals">
                   Signals <span className="ml-1 rounded-full bg-[#edf6ff] px-1.5 py-0.5 text-[10px] text-[#1b6ca8]">4</span>
@@ -106,14 +130,26 @@ export function MeetingWorkspace({
                 </TabsTrigger>
               </TabsList>
             </div>
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white via-white/90 to-transparent sm:hidden" />
+            {canScrollTabs && (
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 flex items-center gap-0.5 bg-gradient-to-l from-white via-white to-white/70 pl-5 pr-1.5 text-[10px] font-medium text-[#1b6ca8] sm:hidden"
+                aria-label="Show more meeting sections"
+                onClick={() => {
+                  const scroller = tabsScrollerRef.current;
+                  scroller?.scrollTo({ left: scroller.scrollWidth, behavior: "smooth" });
+                }}
+              >
+                More <ChevronRight className="size-3.5" />
+              </button>
+            )}
           </div>
         </div>
       </section>
 
       <TabsContent value="overview"><OverviewView progress={progress} notify={notify} onOpenTab={onTabChange} selectedQuestionCount={selectedQuestions.length} /></TabsContent>
       <TabsContent value="signals"><SignalsView progress={progress} notify={notify} reviewed={reviewedSections.includes("signals")} onReviewed={() => { onReviewSection("signals"); notify("Priority signals reviewed"); }} /></TabsContent>
-      <TabsContent value="stakeholders"><StakeholdersView progress={progress} reviewed={reviewedSections.includes("stakeholders")} onReviewed={() => { onReviewSection("stakeholders"); notify("Stakeholder roles confirmed"); }} /></TabsContent>
+      <TabsContent value="stakeholders"><StakeholdersView progress={progress} reviewed={reviewedSections.includes("stakeholders")} onRolesChanged={() => onInvalidateSection("stakeholders")} onReviewed={() => { onReviewSection("stakeholders"); notify("Stakeholder roles confirmed"); }} /></TabsContent>
       <TabsContent value="discovery"><DiscoveryView selected={selectedQuestions} onSelectedChange={setSelectedQuestions} onContinue={() => onTabChange("brief")} /></TabsContent>
       <TabsContent value="brief">
         <MeetingBriefView

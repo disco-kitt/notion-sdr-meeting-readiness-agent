@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { MeetingWorkspace } from "@/components/meeting-workspace";
 import { ReflectionWorkspace } from "@/components/reflection-workspace";
+import type { ReflectionCompletion } from "@/components/reflection-workspace";
 import { ResearchBanner } from "@/components/research-banner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -45,6 +46,7 @@ export function MeetingPrepApp() {
   const [briefBlockCount, setBriefBlockCount] = React.useState(5);
   const [selectedQuestions, setSelectedQuestions] = React.useState(["q1", "q2", "q4"]);
   const [reviewedSections, setReviewedSections] = React.useState<string[]>([]);
+  const [reflectionCompletion, setReflectionCompletion] = React.useState<ReflectionCompletion | null>(null);
   const [toast, setToast] = React.useState<string | null>(null);
   const [mobileNav, setMobileNav] = React.useState(false);
 
@@ -89,6 +91,10 @@ export function MeetingPrepApp() {
     setReviewedSections((current) => current.includes(section) ? current : [...current, section]);
   }, []);
 
+  const invalidateSectionReview = React.useCallback((section: string) => {
+    setReviewedSections((current) => current.filter((item) => item !== section));
+  }, []);
+
   const openMeeting = React.useCallback((tab = "overview") => {
     setMode("meeting");
     changeTab(tab);
@@ -103,7 +109,7 @@ export function MeetingPrepApp() {
   return (
     <div className="min-h-screen bg-[#fbfbfa]">
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-[248px] border-r border-[#e6e5e2] bg-[#f7f7f5] lg:block">
-        <Sidebar mode={mode} onMeeting={openMeeting} onReflection={openReflection} />
+        <Sidebar mode={mode} reflectionCompleted={Boolean(reflectionCompletion)} onMeeting={openMeeting} onReflection={openReflection} />
       </aside>
 
       <div className="lg:pl-[248px]">
@@ -134,11 +140,11 @@ export function MeetingPrepApp() {
                         setBriefStatus("Ready");
                         showToast("Meeting marked ready");
                       } else {
-                        openMeeting("overview");
+                        openMeeting(readiness.nextItem?.tab ?? "overview");
                       }
                     }}
                   >
-                    {briefStatus === "Ready" ? <><Check />Ready</> : readiness.isReady ? "Mark meeting ready" : `${readiness.remainingCount} ${readiness.remainingCount === 1 ? "step" : "steps"} left`}
+                    {briefStatus === "Ready" ? <><Check />Ready</> : readiness.isReady ? "Mark meeting ready" : <><span>Next: {readiness.nextItem?.actionLabel.toLowerCase()}</span><span className="hidden border-l border-current/20 pl-2 text-[10px] font-normal opacity-70 sm:inline">{readiness.remainingCount} {readiness.remainingCount === 1 ? "step" : "steps"} left</span></>}
                   </Button>
                 )}
               </>
@@ -175,13 +181,19 @@ export function MeetingPrepApp() {
                   setSelectedQuestions={setSelectedQuestions}
                   reviewedSections={reviewedSections}
                   onReviewSection={markSectionReviewed}
+                  onInvalidateSection={invalidateSectionReview}
                   readiness={readiness}
                   notify={showToast}
                 />
               </motion.div>
             ) : (
               <motion.div key="reflection" initial={reduceMotion ? false : { opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} exit={reduceMotion ? undefined : { opacity: 0 }} transition={{ duration: 0.18 }}>
-                <ReflectionWorkspace notify={showToast} onBack={() => openMeeting("overview")} />
+                <ReflectionWorkspace
+                  notify={showToast}
+                  onBack={() => openMeeting("overview")}
+                  completion={reflectionCompletion}
+                  onComplete={(completion) => setReflectionCompletion((current) => current ?? completion)}
+                />
               </motion.div>
             )}
           </AnimatePresence>
@@ -195,7 +207,7 @@ export function MeetingPrepApp() {
             <DialogDescription>Meeting preparation workspace navigation</DialogDescription>
           </DialogHeader>
           <Button variant="ghost" size="icon" className="absolute right-2 top-2 z-10" aria-label="Close navigation" onClick={() => setMobileNav(false)}><X /></Button>
-          <Sidebar mode={mode} onMeeting={openMeeting} onReflection={openReflection} />
+          <Sidebar mode={mode} reflectionCompleted={Boolean(reflectionCompletion)} onMeeting={openMeeting} onReflection={openReflection} />
         </DialogContent>
       </Dialog>
 
@@ -220,10 +232,12 @@ export function MeetingPrepApp() {
 
 function Sidebar({
   mode,
+  reflectionCompleted,
   onMeeting,
   onReflection,
 }: {
   mode: WorkspaceMode;
+  reflectionCompleted: boolean;
   onMeeting: (tab?: string) => void;
   onReflection: () => void;
 }) {
@@ -269,7 +283,7 @@ function Sidebar({
       >
         <BookOpenText className="size-4" />
         <span className="flex-1 truncate">Lumon debrief</span>
-        <Badge variant="amber">Due</Badge>
+        {reflectionCompleted ? <Badge variant="green"><Check className="size-3" />Completed</Badge> : <Badge variant="amber">Due</Badge>}
       </button>
 
       <div className="mt-auto border-t border-[#e4e3df] pt-2">
