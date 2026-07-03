@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 20% 99%;
+    --foreground: 48 4% 19%;
+    --card: 0 0% 100%;
+    --card-foreground: 48 4% 19%;
+    --primary: 48 4% 19%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 48 12% 96%;
+    --secondary-foreground: 48 4% 19%;
+    --muted: 45 12% 95%;
+    --muted-foreground: 45 4% 43%;
+    --accent: 207 76% 51%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 2 69% 53%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 40 10% 88%;
+    --input: 40 10% 82%;
+    --ring: 207 76% 51%;
+    --radius: 0.625rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  :where(button, a, input, textarea, select, [tabindex]:not([tabindex="-1"])):focus-visible {
+    outline: 2px solid rgb(35 131 226 / 58%);
+    outline-offset: 2px;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  ::selection {
+    background: rgb(35 131 226 / 18%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
