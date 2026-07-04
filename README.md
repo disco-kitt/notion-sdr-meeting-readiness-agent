@@ -1,6 +1,6 @@
 # Notion SDR Meeting Preparation Agent
 
-Release-candidate interactive prototype, derived from Sprint 2, for taking an SDR from a booked meeting to a meeting-ready brief in under five minutes.
+A release-candidate interactive prototype, derived from Sprint 2, that takes an SDR from a booked meeting to a meeting-ready brief in under five minutes.
 
 ## Run locally
 

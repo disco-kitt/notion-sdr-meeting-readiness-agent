@@ -2,7 +2,7 @@
 
 Editable diagram sources for the SDR Meeting Preparation Agent.
 
-> **Synchronization status:** [`Sprint2-User-Flows-Mermaid.md`](./Sprint2-User-Flows-Mermaid.md) and the standalone `.mmd` files are the current prototype reference. Editable `.drawio` XML is provided for the master map and every formal flow.
+> **Note — Synchronization:** [`Sprint2-User-Flows-Mermaid.md`](./Sprint2-User-Flows-Mermaid.md) and the standalone `.mmd` files are the current prototype reference. Editable `.drawio` XML is provided for the master map and every formal flow.
 
 The master journey map is an overview, not a ninth formal flow. Flows 3–6 preserve the Google Doc's formal interaction contracts while explicitly identifying states that the fixed Acme prototype does not currently expose.
 
