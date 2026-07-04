@@ -1,0 +1,45 @@
+flowchart LR
+  subgraph SDR[SDR]
+    direction LR
+    select([Select Buying Signal])
+    inspect([Inspect Summary<br/>Confidence • date • category])
+    evidence([Open Evidence Excerpt<br/>or Example Source])
+    reason([Review Reasoning Chain<br/>Evidence → interpretation → angle])
+    rate{Rate Signal}
+    useful([Useful])
+    unclear([Unclear])
+    irrelevant([Not Relevant])
+    back([Return with Context Preserved])
+  end
+  subgraph SYS[Prototype System]
+    direction LR
+    current([Current Fixed Build<br/>Shows cards; save only])
+    contract([Formal Detail and Rating State<br/>Not implemented in fixed build])
+    detail([Signal Detail View])
+    original([Keep Original Evidence])
+    saved([Feedback Recorded<br/>Prototype state])
+  end
+  subgraph AI[Demonstration Automation]
+    direction LR
+    weighting([Adjust Future Weighting<br/>No model runtime in prototype])
+  end
+  subgraph EXT[Simulated Interfaces]
+    direction LR
+    source([Sample Evidence and<br/>example-domain destination])
+  end
+  current --> contract --> select --> detail --> inspect --> evidence
+  source --> evidence --> reason --> rate
+  rate -- Useful --> useful --> original
+  rate -- Unclear --> unclear --> original
+  rate -- Not Relevant --> irrelevant --> original
+  original --> weighting --> saved --> back
+  class select,inspect,evidence,reason,useful,unclear,irrelevant,back,contract,detail,original,weighting action;
+  class rate decision;
+  class current secondary;
+  class saved status;
+  class source external;
+classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
+classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
+classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;
+classDef external fill:#FFF8EE,stroke:#C8872E,stroke-width:1.5px,color:#62420F;
+classDef secondary fill:#F3F4F6,stroke:#8A9099,stroke-width:1.25px,color:#40454C;

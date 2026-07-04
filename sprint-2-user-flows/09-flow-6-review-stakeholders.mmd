@@ -1,0 +1,43 @@
+flowchart LR
+  subgraph SDR[SDR]
+    direction LR
+    open([Open Stakeholder Map])
+    facts([Review Verified Facts<br/>Name • role • observed engagement])
+    priorities([Review Inferred Priorities<br/>Explicit hypothesis • confidence])
+    edit([Edit Buying Role<br/>or Choose Unknown])
+    confirm([Confirm Stakeholder Roles])
+  end
+  subgraph SYS[Prototype System]
+    direction LR
+    matched([Show 3 Matched<br/>Sample Stakeholders])
+    separation([Required Fact / Inference Split<br/>Not explicit in fixed build])
+    safety([No Sensitive Personal-Attribute<br/>Inference])
+    changed{Role Changed or Unknown?}
+    reset([Clear Prior Confirmation<br/>Show changed / unverified count])
+    complete([Stakeholder Gate Complete])
+  end
+  subgraph AI[Demonstration Automation]
+    direction LR
+    suggestions([Display Fixed Buying-Role<br/>and Priority Suggestions])
+    evidence([Evidence Detail Opening<br/>Not implemented in fixed build])
+  end
+  subgraph EXT[Simulated Interfaces]
+    direction LR
+    samples([Sample Role and<br/>Engagement Data])
+  end
+  open --> matched
+  samples --> matched --> suggestions --> separation --> facts --> priorities
+  priorities -. Supporting evidence .-> evidence
+  priorities --> safety --> edit --> changed
+  changed -- Yes --> reset --> edit
+  changed -- No --> confirm --> complete
+  class open,facts,priorities,edit,confirm,matched,separation,safety,suggestions action;
+  class changed decision;
+  class reset,evidence secondary;
+  class complete status;
+  class samples external;
+classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
+classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
+classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;
+classDef external fill:#FFF8EE,stroke:#C8872E,stroke-width:1.5px,color:#62420F;
+classDef secondary fill:#F3F4F6,stroke:#8A9099,stroke-width:1.25px,color:#40454C;

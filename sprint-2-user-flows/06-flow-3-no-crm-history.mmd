@@ -1,0 +1,42 @@
+flowchart LR
+  subgraph SDR[SDR]
+    direction LR
+    open([Open No-History Scenario])
+    prepare([Prepare with Available<br/>Public Evidence])
+    review([Review Public-Research Brief])
+    continue([Continue Readiness Work])
+  end
+  subgraph SYS[Prototype System]
+    direction LR
+    contract([Formal Alternate State<br/>Not exposed in fixed Acme demo])
+    match{Reliable CRM History?}
+    missing([No CRM History<br/>Limited])
+    notice([Explain No Match<br/>Not No Prior Relationship])
+    badge([Public Research Only<br/>Brief badge])
+    unblocked([Preparation Not Blocked])
+    followup([After Meeting<br/>Confirm account record])
+  end
+  subgraph AI[Demonstration Automation]
+    direction LR
+    lookup([Simulate CRM Match Check<br/>Company • domain • attendee])
+    research([Assemble Sample Public Research<br/>No live external retrieval])
+  end
+  subgraph EXT[Simulated Interfaces]
+    direction LR
+    crm([CRM History Interface<br/>No matching sample])
+    public([Public Research Samples])
+  end
+  contract --> open --> lookup --> crm --> match
+  match -- No --> missing --> notice --> research
+  public --> research --> prepare --> badge --> review --> unblocked --> continue
+  continue -. Post-meeting recommendation .-> followup
+  class open,prepare,review,continue,contract,notice,badge,lookup,research action;
+  class match decision;
+  class missing,followup secondary;
+  class unblocked status;
+  class crm,public external;
+classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
+classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
+classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;
+classDef external fill:#FFF8EE,stroke:#C8872E,stroke-width:1.5px,color:#62420F;
+classDef secondary fill:#F3F4F6,stroke:#8A9099,stroke-width:1.25px,color:#40454C;

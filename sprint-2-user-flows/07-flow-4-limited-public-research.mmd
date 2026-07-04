@@ -1,0 +1,41 @@
+flowchart LR
+  subgraph SDR[SDR]
+    direction LR
+    open([Open Limited-Research Scenario])
+    basics([Review Verified Basics Only])
+    questions([Use Broad Role-Based<br/>Discovery Questions])
+    validate([Validate Priorities in Meeting])
+  end
+  subgraph SYS[Prototype System]
+    direction LR
+    contract([Formal Alternate State<br/>Not exposed in fixed Acme demo])
+    threshold{Enough Evidence for<br/>Account-Level Inference?}
+    limited([Limited Research<br/>Limited])
+    message([Explain Sparse Evidence<br/>Avoid confident filler])
+    label([Label Brief<br/>Limited evidence])
+    ready([Validation-First Plan Ready])
+  end
+  subgraph AI[Demonstration Automation]
+    direction LR
+    gather([Inspect Available Samples<br/>No live external retrieval])
+    restrict([Suppress Unsupported Inference])
+    recommend([Recommend Validation<br/>Not assumptions])
+  end
+  subgraph EXT[Simulated Interfaces]
+    direction LR
+    sources([Sparse Public-Research Samples])
+  end
+  contract --> open --> gather
+  sources --> gather --> threshold
+  threshold -- No --> limited --> restrict --> message --> basics
+  basics --> questions --> recommend --> label --> ready --> validate
+  class open,basics,questions,validate,contract,message,gather,restrict,recommend,label action;
+  class threshold decision;
+  class limited secondary;
+  class ready status;
+  class sources external;
+classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
+classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
+classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;
+classDef external fill:#FFF8EE,stroke:#C8872E,stroke-width:1.5px,color:#62420F;
+classDef secondary fill:#F3F4F6,stroke:#8A9099,stroke-width:1.25px,color:#40454C;
