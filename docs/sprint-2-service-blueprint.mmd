@@ -1,0 +1,67 @@
+%% Sprint 2 — Service Blueprint
+%% Reuse: paste into Mermaid Live, GitHub, Notion, or diagrams.net (Insert > Advanced > Mermaid).
+flowchart LR
+  subgraph USER["USER ACTIONS · SDR / AE"]
+    direction LR
+    U0([Meeting appears]) --> U1([Open partial workspace]) --> U2([Review evidence as it arrives]) --> U3([Confirm signals and people]) --> U4([Curate discovery plan]) --> U5([Edit and verify brief]) --> U6{Share or keep draft?} --> U7([Run meeting]) --> U8([Reflect and approve CRM draft])
+  end
+
+  subgraph ORCH["ORCHESTRATION · PRODUCT / WORKFLOW"]
+    direction LR
+    O0[Detect meeting] --> O1[Resolve account and attendees] --> O2[Fan out research jobs] --> O3[Stream card states and recalculate readiness] --> O4[Persist selections and user corrections] --> O5[Version brief and invalidate stale review] --> O6[Deliver, notify, and audit] --> O7[Prompt after meeting] --> O8[Gate and queue CRM write]
+  end
+
+  subgraph AI["AI TASKS · GROUNDED SYNTHESIS"]
+    direction LR
+    A0[Classify meeting intent] --> A1[Entity resolution] --> A2[Extract and rank signals] --> A3[Synthesize why-now and stakeholder hypotheses] --> A4[Generate questions and meeting angle] --> A5[Assemble cited brief] --> A6[Refresh only affected claims] --> A7[Structure reflection notes] --> A8[Draft CRM fields and learn from corrections]
+  end
+
+  subgraph DATA["DATA / INTEGRATIONS"]
+    direction LR
+    D0[(Calendar)] --> D1[(CRM account, activity, opportunity)] --> D2[(People and company web)] --> D3[(Evidence store)] --> D4[(User edits and decisions)] --> D5[(Versioned brief)] --> D6[(Notion / AE channel / export)] --> D7[(Meeting outcome)] --> D8[(CRM + audit log)]
+  end
+
+  subgraph TRUST["CONFIDENCE, PROVENANCE & RECOVERY"]
+    direction LR
+    T0[Show trigger and freshness] --> T1[Expose match confidence and ask on ambiguity] --> T2[Per-source loading, timeout, retry] --> T3[Claim-level source, date, excerpt, support or conflict] --> T4[Label Supported, Inferred, Conflicting, or Stale] --> T5[AI draft warning + human verification] --> T6[Confirm recipient and incomplete status] --> T7[Require deliberate assumption labels] --> T8[No silent CRM write; return receipt or retry]
+  end
+
+  U0 -. starts .-> O0
+  O1 -. context .-> A1
+  O2 -. tasks .-> A2
+  A2 -. citations .-> D3
+  D3 -. evidence .-> T3
+  U3 -. corrections .-> D4
+  D4 -. constrains .-> A4
+  A5 -. produces .-> D5
+  D5 -. review .-> U5
+  U6 -. decision .-> O6
+  O6 -. delivery .-> D6
+  U8 -. approval .-> O8
+  O8 -. write .-> D8
+
+  F1{{"Failure: no or ambiguous match"}} -. pause and ask .-> T1
+  F2{{"Failure: source unavailable or stale"}} -. partial result + retry .-> T2
+  F3{{"Failure: conflicting evidence"}} -. preserve conflict .-> T4
+  F4{{"Failure: late high-impact finding"}} -. update affected sections .-> O5
+  F5{{"Failure: delivery or CRM write fails"}} -. keep draft + idempotent retry .-> T8
+
+  O1 -. detects .-> F1
+  O2 -. detects .-> F2
+  A3 -. detects .-> F3
+  A6 -. detects .-> F4
+  O6 -. detects .-> F5
+  O8 -. detects .-> F5
+
+  classDef user fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
+  classDef orchestration fill:#EDF6FF,stroke:#2383E2,stroke-width:1.4px,color:#174C78;
+  classDef ai fill:#F4EFFC,stroke:#7256A0,stroke-width:1.4px,color:#4E386F;
+  classDef data fill:#FFF8EE,stroke:#C8872E,stroke-width:1.4px,color:#62420F;
+  classDef trust fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.4px,color:#205C38;
+  classDef failure fill:#FFF1F0,stroke:#C84B45,stroke-width:1.5px,color:#7D2824;
+  class U0,U1,U2,U3,U4,U5,U6,U7,U8 user;
+  class O0,O1,O2,O3,O4,O5,O6,O7,O8 orchestration;
+  class A0,A1,A2,A3,A4,A5,A6,A7,A8 ai;
+  class D0,D1,D2,D3,D4,D5,D6,D7,D8 data;
+  class T0,T1,T2,T3,T4,T5,T6,T7,T8 trust;
+  class F1,F2,F3,F4,F5 failure;

@@ -49,10 +49,19 @@ export function MeetingPrepApp() {
   const [reflectionCompletion, setReflectionCompletion] = React.useState<ReflectionCompletion | null>(null);
   const [toast, setToast] = React.useState<string | null>(null);
   const [mobileNav, setMobileNav] = React.useState(false);
+  const toastTimer = React.useRef<number | null>(null);
 
   const showToast = React.useCallback((message: string) => {
+    if (toastTimer.current) window.clearTimeout(toastTimer.current);
     setToast(message);
-    window.setTimeout(() => setToast(null), 3600);
+    toastTimer.current = window.setTimeout(() => {
+      setToast(null);
+      toastTimer.current = null;
+    }, 3600);
+  }, []);
+
+  React.useEffect(() => () => {
+    if (toastTimer.current) window.clearTimeout(toastTimer.current);
   }, []);
 
   React.useEffect(() => {
@@ -83,6 +92,10 @@ export function MeetingPrepApp() {
     [progress, reviewedSections, selectedQuestions.length, briefGenerated, briefBlockCount],
   );
 
+  React.useEffect(() => {
+    if (briefStatus === "Ready" && !readiness.isReady) setBriefStatus("Draft");
+  }, [briefStatus, readiness.isReady]);
+
   const changeTab = React.useCallback((tab: string) => {
     setActiveTab(tab);
   }, []);
@@ -94,6 +107,11 @@ export function MeetingPrepApp() {
   const invalidateSectionReview = React.useCallback((section: string) => {
     setReviewedSections((current) => current.filter((item) => item !== section));
   }, []);
+
+  const invalidateBriefReview = React.useCallback(() => {
+    invalidateSectionReview("brief");
+    setBriefStatus("Draft");
+  }, [invalidateSectionReview]);
 
   const openMeeting = React.useCallback((tab = "overview") => {
     setMode("meeting");
@@ -126,6 +144,7 @@ export function MeetingPrepApp() {
             <div className="sm:hidden">
               <span className="truncate text-sm font-semibold">{mode === "meeting" ? "Acme discovery" : "Lumon debrief"}</span>
             </div>
+            <Badge variant="outline" className="hidden shrink-0 sm:inline-flex">Interactive demo · sample data</Badge>
           </div>
 
           <div className="flex items-center gap-1.5">
@@ -182,6 +201,7 @@ export function MeetingPrepApp() {
                   reviewedSections={reviewedSections}
                   onReviewSection={markSectionReviewed}
                   onInvalidateSection={invalidateSectionReview}
+                  onInvalidateBrief={invalidateBriefReview}
                   readiness={readiness}
                   notify={showToast}
                 />
@@ -252,19 +272,20 @@ function Sidebar({
       <div className="mt-1 space-y-1">
         <button
           onClick={() => onMeeting()}
+          aria-current={mode === "meeting" ? "page" : undefined}
           className={`w-full rounded-md px-2 py-2.5 text-left transition-colors ${mode === "meeting" ? "bg-[#ececea]" : "hover:bg-[#efefed]"}`}
         >
           <div className="flex items-start gap-2.5">
             <div className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-md bg-[#dbeafe] text-xs font-semibold text-[#245b96]">A</div>
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-medium">Acme discovery</div>
-              <div className="mt-0.5 flex items-center gap-1 text-[11px] text-muted-foreground"><Clock3 className="size-3" />12:30 PM · 3 people</div>
+              <div className="mt-0.5 flex items-center gap-1 text-[11px] text-muted-foreground"><Clock3 className="size-3" />12:30 PM · 4 people</div>
             </div>
             <span className="mt-1 size-1.5 rounded-full bg-[#2383E2]" />
           </div>
         </button>
 
-        <div className="w-full rounded-md px-2 py-2.5 text-left text-muted-foreground hover:bg-[#efefed]">
+        <div className="w-full rounded-md px-2 py-2.5 text-left text-muted-foreground">
           <div className="flex items-start gap-2.5">
             <div className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-md bg-[#f7dfc1] text-xs font-semibold text-[#855b21]">V</div>
             <div className="min-w-0 flex-1">
@@ -279,6 +300,7 @@ function Sidebar({
       <div className="mt-6 px-2 text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground/70">Follow-ups</div>
       <button
         onClick={onReflection}
+        aria-current={mode === "reflection" ? "page" : undefined}
         className={`mt-1 flex w-full items-center gap-2 rounded-md px-2 py-2 text-left text-sm transition-colors ${mode === "reflection" ? "bg-[#ececea] font-medium" : "text-muted-foreground hover:bg-[#efefed] hover:text-foreground"}`}
       >
         <BookOpenText className="size-4" />
@@ -291,7 +313,7 @@ function Sidebar({
           <div className="flex size-7 items-center justify-center rounded-full bg-[#dfe7d8] text-xs font-semibold text-[#49603d]">DS</div>
           <div className="min-w-0 flex-1">
             <div className="truncate text-sm font-medium">Devon Scott</div>
-            <div className="truncate text-[11px] text-muted-foreground">Sales Development</div>
+            <div className="truncate text-xs text-muted-foreground">Account team</div>
           </div>
         </div>
       </div>

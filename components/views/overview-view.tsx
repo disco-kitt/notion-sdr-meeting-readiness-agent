@@ -145,6 +145,7 @@ export function OverviewView({
                   {showEvidence && (
                     <motion.div initial={reduceMotion ? false : { opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={reduceMotion ? undefined : { opacity: 0, height: 0 }} className="overflow-hidden">
                       <div className="mt-4 space-y-2 border-t border-[#ecebe7] pt-3">
+                        <p className="rounded-md bg-[#fbf4df] px-3 py-2 text-xs leading-5 text-[#76571f]" role="note"><strong className="font-semibold">Demonstration evidence.</strong> These sample records and links illustrate the verification experience; they are not live CRM or source connections.</p>
                         {narrativeSources.map((source) => (
                           <details key={source.id} className="group rounded-lg border border-[#e8e7e4] bg-[#fcfcfb] px-3 py-2.5">
                             <summary className="flex cursor-pointer list-none items-start gap-2 text-xs [&::-webkit-details-marker]:hidden">
@@ -154,7 +155,7 @@ export function OverviewView({
                             </summary>
                             <div className="ml-5 mt-2 border-t border-[#ecebe7] pt-2 text-xs leading-5 text-muted-foreground">
                               <p><span className="font-medium text-foreground">Evidence used:</span> “{source.evidence}”</p>
-                              <a aria-label={`Open source: ${source.title}`} className="mt-2 inline-flex items-center gap-1 font-medium text-[#1b6ca8] hover:underline" href={source.href} target="_blank" rel="noreferrer">Open source <ExternalLink className="size-3" /></a>
+                              <a aria-label={`View example domain for ${source.title}`} className="mt-2 inline-flex items-center gap-1 font-medium text-[#1b6ca8] hover:underline" href={source.href} target="_blank" rel="noreferrer">View example domain <ExternalLink className="size-3" /></a>
                             </div>
                           </details>
                         ))}
@@ -310,7 +311,7 @@ export function OverviewView({
             <Card className="shadow-none">
               <CardHeader className="pb-2"><div className="flex items-center gap-2"><MessageSquareText className="size-4 text-muted-foreground" /><CardTitle>Your notes</CardTitle></div></CardHeader>
               <CardContent>
-                <Textarea value={note} onChange={(event) => setNote(event.target.value)} placeholder="Add a reminder or hypothesis…" className="min-h-[96px] border-0 bg-[#f7f7f5] shadow-none focus:ring-1" />
+                <Textarea aria-label="Meeting notes" value={note} onChange={(event) => setNote(event.target.value)} placeholder="Add a reminder or hypothesis…" className="min-h-[96px] border-0 bg-[#f7f7f5] shadow-none focus:ring-1" />
                 <div className="mt-2 flex justify-end"><Button variant="ghost" size="sm" disabled={!note.trim()} onClick={() => notify("Note saved to the meeting brief")}><Check />Save note</Button></div>
               </CardContent>
             </Card>

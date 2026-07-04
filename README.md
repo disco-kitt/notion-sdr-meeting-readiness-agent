@@ -30,3 +30,11 @@ Open `http://localhost:3000`.
 - Framer Motion for streaming states, transitions, and brief reordering
 
 The production build is also exported to `out/` for static review.
+
+## Submission artifacts
+
+- [Sprint 2 — Service Blueprint](docs/sprint-2-service-blueprint.md)
+- [Editable service-blueprint diagram](docs/sprint-2-service-blueprint.mmd)
+- [Sprint 2 user flows](sprint-2-user-flows/README.md)
+- [Formative usability evaluation](docs/formative-usability-evaluation.md)
+- [Internal alpha test report](docs/internal-alpha-test-report.md)

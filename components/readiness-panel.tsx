@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Check, Circle, Sparkles } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { MeetingReadiness } from "@/lib/meeting-readiness";
 import { cn } from "@/lib/utils";
@@ -11,11 +12,13 @@ export function ReadinessPanel({
   researchProgress,
   onNavigate,
   onMarkReady,
+  markedReady,
 }: {
   readiness: MeetingReadiness;
   researchProgress: number;
   onNavigate: (tab: string) => void;
   onMarkReady: () => void;
+  markedReady: boolean;
 }) {
   const reduceMotion = useReducedMotion();
   const next = readiness.nextItem;
@@ -52,16 +55,20 @@ export function ReadinessPanel({
                     exit={reduceMotion ? undefined : { opacity: 0, y: -3 }}
                     className="text-[16px] font-semibold tracking-[-0.015em]"
                   >
-                    {readiness.isReady
-                      ? "You’re ready for this meeting"
+                    {markedReady
+                      ? "Meeting marked ready"
+                      : readiness.isReady
+                      ? "Preparation review complete"
                       : `${readiness.remainingCount} ${readiness.remainingCount === 1 ? "step" : "steps"} before you’re ready`}
                   </motion.h2>
                 </AnimatePresence>
                 <span className="text-xs text-muted-foreground">{readiness.completedCount} of {readiness.totalCount}</span>
               </div>
               <p className="mt-1 text-sm leading-5 text-muted-foreground">
-                {readiness.isReady
-                  ? "Your research, discovery plan, and brief are aligned."
+                {markedReady
+                  ? "Your preparation is complete and the meeting status is confirmed."
+                  : readiness.isReady
+                  ? "All five preparation steps are complete. Confirm the overall meeting status when you’re satisfied."
                   : waitingOnResearch
                     ? `The agent is still checking sources. You can review completed work now. ${researchProgress}% complete.`
                     : `Next: ${next?.label.toLowerCase()}.`}
@@ -70,7 +77,9 @@ export function ReadinessPanel({
           </div>
 
           <div className="shrink-0 pl-[50px] md:pl-0">
-            {readiness.isReady ? (
+            {markedReady ? (
+              <Badge variant="green"><Check />Ready</Badge>
+            ) : readiness.isReady ? (
               <Button size="sm" onClick={onMarkReady}><Check />Mark meeting ready</Button>
             ) : waitingOnResearch ? (
               <Button variant="secondary" size="sm" disabled><Sparkles className="animate-pulse" />Researching {researchProgress}%</Button>

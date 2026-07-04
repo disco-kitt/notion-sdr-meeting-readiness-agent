@@ -126,7 +126,7 @@ export const initialBrief: BriefBlock[] = [
 
 export const researchActivities = [
   { threshold: 42, label: "Matched Acme to Salesforce account", source: "Salesforce" },
-  { threshold: 52, label: "Resolved 3 meeting attendees", source: "Calendar" },
+  { threshold: 52, label: "Resolved 4 meeting attendees", source: "Calendar" },
   { threshold: 66, label: "Reviewed 18 recent company updates", source: "Web" },
   { threshold: 78, label: "Found new CRO leadership signal", source: "LinkedIn" },
   { threshold: 90, label: "Updated recommended discovery angle", source: "Agent" },

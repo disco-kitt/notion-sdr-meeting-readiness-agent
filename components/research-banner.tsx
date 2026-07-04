@@ -37,8 +37,8 @@ export function ResearchBanner({ progress, onRestart }: { progress: number; onRe
               <Check className="size-3" />
             </motion.span>
             <span className="font-medium text-foreground">Research synced</span>
-            <span className="hidden sm:inline">26 sources · Updated just now</span>
-            <span className="sm:hidden">26 sources</span>
+            <span className="hidden sm:inline">26 sample sources · Updated just now</span>
+            <span className="sm:hidden">26 samples</span>
             <ChevronDown className={cn("ml-auto size-3.5 transition-transform duration-200", expanded && "rotate-180")} />
           </button>
 
@@ -81,9 +81,9 @@ export function ResearchBanner({ progress, onRestart }: { progress: number; onRe
           </motion.div>
           <div className="min-w-0 flex-1">
             <div className="mb-1 flex items-center gap-2"><span className="text-sm font-semibold">Research in progress</span><Badge variant="blue" className="border-0 bg-transparent px-0">{progress}%</Badge></div>
-            <p className="truncate text-xs text-muted-foreground">Review completed work while the agent checks the remaining sources</p>
+            <p className="truncate text-xs text-muted-foreground">Review completed work while the demo checks its remaining sample sources</p>
           </div>
-          <Progress value={progress} className="hidden w-32 sm:block" />
+          <Progress value={progress} label="Research progress" className="hidden w-32 sm:block" />
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
@@ -98,7 +98,7 @@ export function ResearchBanner({ progress, onRestart }: { progress: number; onRe
             );
           })}
         </div>
-        <Progress value={progress} className="sm:hidden" />
+        <Progress value={progress} label="Research progress" className="sm:hidden" />
       </div>
     </div>
   );

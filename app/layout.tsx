@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Meeting Prep — Notion Sales",
-  description: "Interactive SDR meeting preparation agent prototype",
+  description: "Interactive sales meeting preparation agent prototype",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

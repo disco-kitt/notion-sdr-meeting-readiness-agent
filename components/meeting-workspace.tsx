@@ -28,6 +28,7 @@ export function MeetingWorkspace({
   reviewedSections,
   onReviewSection,
   onInvalidateSection,
+  onInvalidateBrief,
   readiness,
   notify,
 }: {
@@ -45,6 +46,7 @@ export function MeetingWorkspace({
   reviewedSections: string[];
   onReviewSection: (section: string) => void;
   onInvalidateSection: (section: string) => void;
+  onInvalidateBrief: () => void;
   readiness: MeetingReadiness;
   notify: (message: string) => void;
 }) {
@@ -84,7 +86,7 @@ export function MeetingWorkspace({
                 </div>
                 <p className="text-xs text-muted-foreground sm:text-sm">Acme, Inc. <span className="hidden sm:inline">· Enterprise software</span> · 1,240 employees</p>
                 <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground sm:mt-3">
-                  <span className="flex items-center gap-1.5"><Calendar className="size-3.5" />Tue, July 8</span>
+                  <span className="flex items-center gap-1.5"><Calendar className="size-3.5" />Wed, July 8</span>
                   <span className="flex items-center gap-1.5"><Clock3 className="size-3.5" />12:30–1:00 PM</span>
                   <span className="hidden items-center gap-1.5 sm:flex"><Video className="size-3.5" />Google Meet</span>
                   <span className="hidden items-center gap-1.5 sm:flex"><MapPin className="size-3.5" />San Francisco</span>
@@ -92,19 +94,20 @@ export function MeetingWorkspace({
               </div>
             </div>
 
-            <button onClick={() => onTabChange("stakeholders")} className="flex items-center gap-3 self-start rounded-lg px-0 py-1.5 text-left transition-colors hover:bg-[#f7f7f5] sm:border sm:border-[#e7e6e2] sm:bg-white sm:p-3">
+            <button aria-label="Open stakeholder map for 4 attendees" onClick={() => onTabChange("stakeholders")} className="flex items-center gap-3 self-start rounded-lg px-0 py-1.5 text-left transition-colors hover:bg-[#f7f7f5] sm:border sm:border-[#e7e6e2] sm:bg-white sm:p-3">
               <div className="flex -space-x-2">
                 {[
                   ["MC", "bg-[#dbeafe] text-[#245b96]"],
                   ["JL", "bg-[#e9ddf7] text-[#6d4b94]"],
+                  ["AP", "bg-[#f8e2c5] text-[#855b21]"],
                   ["DS", "bg-[#dfe7d8] text-[#49603d]"],
                 ].map(([initials, color]) => (
                   <div key={initials} className={`flex size-8 items-center justify-center rounded-full border-2 border-white text-[10px] font-semibold ${color}`}>{initials}</div>
                 ))}
               </div>
               <div>
-                <div className="text-xs font-medium">3 attendees</div>
-                <div className="text-[11px] text-muted-foreground">2 external · 1 internal</div>
+                <div className="text-xs font-medium">4 attendees</div>
+                <div className="text-[11px] text-muted-foreground">3 external · 1 internal</div>
               </div>
               <ExternalLink className="size-3.5 text-muted-foreground" />
             </button>
@@ -112,7 +115,7 @@ export function MeetingWorkspace({
 
           {activeTab === "overview" && (
             <div className="mt-4 sm:mt-5">
-              <ReadinessPanel readiness={readiness} researchProgress={progress} onNavigate={onTabChange} onMarkReady={() => { setBriefStatus("Ready"); notify("Meeting marked ready"); }} />
+              <ReadinessPanel readiness={readiness} researchProgress={progress} markedReady={briefStatus === "Ready"} onNavigate={onTabChange} onMarkReady={() => { setBriefStatus("Ready"); notify("Meeting marked ready"); }} />
             </div>
           )}
 
@@ -160,7 +163,8 @@ export function MeetingWorkspace({
           researchComplete={progress >= 100}
           onBlockCountChange={setBriefBlockCount}
           reviewed={reviewedSections.includes("brief")}
-          onReviewed={() => { onReviewSection("brief"); notify("Meeting brief reviewed"); }}
+          onReviewed={() => { onReviewSection("brief"); notify("Brief review complete — confirm meeting readiness next"); }}
+          onContentChanged={onInvalidateBrief}
           onReturnToOverview={() => onTabChange("overview")}
           preparationReady={readiness.isReady}
           remainingPreparationSteps={readiness.remainingCount}
