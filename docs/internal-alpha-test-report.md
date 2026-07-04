@@ -1,7 +1,7 @@
 # Internal Alpha Test Report: SDR Meeting Readiness Agent
 
 **Report date:** July 3, 2026  
-**Product stage:** Interactive Sprint 2 prototype  
+**Product stage:** Release-candidate interactive prototype derived from Sprint 2
 **Build assessed:** Local source and production static export  
 **Alpha outcome:** Pass with conditions; not yet ready for an external beta
 
@@ -11,7 +11,7 @@ The SDR Meeting Readiness Agent presents a coherent, polished prototype for movi
 
 The current implementation is technically healthy as a front-end prototype: strict TypeScript checking passed, and the Next.js production build compiled, type-checked, generated, and statically exported successfully. The experience also contains meaningful usability and accessibility work, including responsive navigation, semantic Radix UI primitives, visible focus treatment, reduced-motion handling, live status announcements, labeled icon buttons, and guardrails around AI-generated material.
 
-This is not a production-capable agent. Research, account data, stakeholders, AI synthesis, CRM changes, Notion copy, AE sharing, clipboard, and export actions are simulated with local React state and fixed mock data. Several controls announce success even though no external action occurs. There is no authentication, persistence, API layer, evaluation harness, automated test suite, or runtime error handling. Beta promotion should therefore be limited to a clearly labeled, moderated prototype study until real integrations and trust controls exist.
+This is not a production-capable agent. Research, account data, stakeholders, AI synthesis, CRM changes, Notion copy, teammate sharing, clipboard, and export actions are simulated with local React state and fixed mock data. The current UI labels these outcomes as demonstration or session-only behavior and explicitly states when nothing was sent or written. There is no authentication, persistence, API layer, evaluation harness, automated test suite, or runtime error handling. Beta promotion should therefore be limited to a clearly labeled, moderated prototype study until real integrations and trust controls exist.
 
 ## Testing Methodology
 
@@ -54,13 +54,13 @@ The in-app browser automation interface was not available in this assessment ses
 
 ### Functional and product findings
 
-1. **The core workflow is understandable and internally consistent.** The five readiness requirements are centralized in `buildMeetingReadiness`, and each item links to an actionable tab. The UI exposes this model in the meeting header and readiness panel ([`components/readiness-panel.tsx`, lines 21–107](../components/readiness-panel.tsx#L21)).
+1. **The core workflow is understandable and internally consistent.** The five readiness requirements are centralized in `buildMeetingReadiness`, and each item links to an actionable tab. The UI exposes this model in the meeting header and readiness panel ([`components/readiness-panel.tsx`, lines 10–120](../components/readiness-panel.tsx#L10)).
 
-2. **Progressive disclosure is handled well.** Research begins at 46% and advances on a timer, while the user can review completed material. The research banner communicates source-level states and converts to a compact synced state at completion ([`components/research-banner.tsx`, lines 17–104](../components/research-banner.tsx#L17)). Overview content progressively reveals a changed recommendation once the high-impact signal arrives ([`components/views/overview-view.tsx`, lines 101–127](../components/views/overview-view.tsx#L101)).
+2. **Progressive disclosure is handled well.** Research begins at 46% and advances on a timer, while the user can review completed material. The research banner communicates source-level states and converts to a compact synced state at completion ([`components/research-banner.tsx`, lines 17–104](../components/research-banner.tsx#L17)). Overview content progressively reveals a changed recommendation once the high-impact signal arrives ([`components/views/overview-view.tsx`, lines 168–182](../components/views/overview-view.tsx#L168)).
 
-3. **The experience appropriately asks the SDR to verify AI output.** Evidence can be expanded on the “why now” narrative, signal confidence is translated into plain-language labels, and the brief explicitly states that it is an AI draft assembled from sources and should be verified before sharing ([`components/views/meeting-brief-view.tsx`, lines 112–125](../components/views/meeting-brief-view.tsx#L112)).
+3. **The experience appropriately asks the SDR to verify AI output.** Evidence can be expanded on the “why now” narrative, signal confidence is translated into plain-language labels, and the brief explicitly states that it is a demonstration AI draft assembled from sample sources and should be verified before sharing ([`components/views/meeting-brief-view.tsx`, lines 113–160](../components/views/meeting-brief-view.tsx#L113)).
 
-4. **User control is stronger than a one-click automation pattern.** SDRs can edit synthesized text, choose discovery questions, add or remove brief sections, keep a draft, review assumptions, and approve, edit, discard, or restore the CRM draft. This is especially appropriate for high-consequence customer and CRM data ([`components/reflection-workspace.tsx`, lines 77–116](../components/reflection-workspace.tsx#L77)).
+4. **User control is stronger than a one-click automation pattern.** SDRs can edit synthesized text, choose discovery questions, add or remove brief sections, keep a draft, review assumptions, and approve, edit, discard, or restore the CRM draft. This is especially appropriate for high-consequence customer and CRM data ([`components/reflection-workspace.tsx`, lines 61–154](../components/reflection-workspace.tsx#L61)).
 
 5. **The implementation matches most documented Sprint 2 flows.** The prototype covers prepare-for-discovery, research-still-running, build-and-share, and post-meeting-reflection journeys documented in [`Sprint2-User-Flows-Mermaid.md`](../sprint-2-user-flows/Sprint2-User-Flows-Mermaid.md).
 
@@ -70,13 +70,13 @@ The in-app browser automation interface was not available in this assessment ses
 
 - Positive: the root document declares English, supplies descriptive metadata, and uses native `button`, `input`, and `textarea` controls ([`app/layout.tsx`, lines 4–13](../app/layout.tsx#L4)).
 - Positive: global focus-visible styling and a reduced-motion media query are defined ([`app/globals.css`, lines 40–61](../app/globals.css#L40)). Framer Motion components commonly consult `useReducedMotion`.
-- Positive: Radix Tabs, Dialog, and Dropdown Menu provide keyboard-aware semantics and focus management. The mobile navigation dialog includes a hidden title and description, plus explicitly labeled open and close buttons ([`components/meeting-prep-app.tsx`, lines 191–199](../components/meeting-prep-app.tsx#L191)).
-- Positive: transient feedback uses `role="status"` and `aria-live="polite"`; progress exposes `role="progressbar"` and current values ([`components/meeting-prep-app.tsx`, lines 202–215](../components/meeting-prep-app.tsx#L202); [`components/ui/progress.tsx`, lines 5–13](../components/ui/progress.tsx#L5)).
+- Positive: Radix Tabs, Dialog, and Dropdown Menu provide keyboard-aware semantics and focus management. The mobile navigation dialog includes a hidden title and description, plus explicitly labeled open and close buttons ([`components/meeting-prep-app.tsx`, lines 223–231](../components/meeting-prep-app.tsx#L223)).
+- Positive: transient feedback uses `role="status"` and `aria-live="polite"`; progress exposes `role="progressbar"`, contextual labels, and current values ([`components/meeting-prep-app.tsx`, lines 234–247](../components/meeting-prep-app.tsx#L234); [`components/ui/progress.tsx`, lines 5–13](../components/ui/progress.tsx#L5)).
 - Positive: selection and confirmation controls expose `aria-pressed`; collapsible sections expose `aria-expanded`; icon-only controls generally receive accessible labels.
-- Positive: small-screen layouts collapse side navigation into a dialog, stack action groups, simplify secondary metadata, and make tabs horizontally scrollable ([`components/meeting-workspace.tsx`, lines 51–110](../components/meeting-workspace.tsx#L51)).
-- Gap: drag reordering has no keyboard-accessible move-up/move-down controls or announcement of the new position. The visible grip is marked `aria-hidden`, leaving reordering effectively pointer-only ([`components/views/meeting-brief-view.tsx`, lines 120–127](../components/views/meeting-brief-view.tsx#L120)).
-- Gap: the Overview “Your notes” and Brief “Private notes” textareas rely on adjacent headings and placeholders but have no programmatic label ([`components/views/overview-view.tsx`, lines 254–260](../components/views/overview-view.tsx#L254); [`components/views/meeting-brief-view.tsx`, lines 133–136](../components/views/meeting-brief-view.tsx#L133)).
-- Gap: the meeting page and generated brief can expose two top-level `h1` elements, weakening heading structure for assistive-technology navigation ([`components/meeting-workspace.tsx`, line 58](../components/meeting-workspace.tsx#L58); [`components/views/meeting-brief-view.tsx`, line 115](../components/views/meeting-brief-view.tsx#L115)).
+- Positive: small-screen layouts collapse side navigation into a dialog, stack action groups, simplify secondary metadata, and make tabs horizontally scrollable with an overflow cue ([`components/meeting-workspace.tsx`, lines 53–73 and 122–148](../components/meeting-workspace.tsx#L53)).
+- Positive: brief sections provide keyboard Move up/Move down controls and announce their new position, while retaining pointer drag-and-drop ([`components/views/meeting-brief-view.tsx`, lines 99–110 and 139–150](../components/views/meeting-brief-view.tsx#L99)).
+- Positive: the Overview meeting-notes and Brief private-notes textareas have explicit accessible labels.
+- Gap: the meeting page and generated brief can expose two top-level `h1` elements, weakening heading structure for assistive-technology navigation ([`components/meeting-workspace.tsx`, line 84](../components/meeting-workspace.tsx#L84); [`components/views/meeting-brief-view.tsx`, line 135](../components/views/meeting-brief-view.tsx#L135)).
 - Gap: much supporting copy uses 10–11 px text and low-emphasis muted colors. Contrast and readability need measurement in the rendered browser at 200% and 400% zoom; static inspection cannot establish WCAG 2.2 AA conformance.
 
 ## Issues Identified
@@ -84,14 +84,14 @@ The in-app browser automation interface was not available in this assessment ses
 | ID | Severity | Issue | Evidence and impact |
 | --- | --- | --- | --- |
 | ALPHA-01 | Critical for external beta | External integrations and AI behavior are simulated. | [`lib/mock-data.ts`](../lib/mock-data.ts) contains all signals, stakeholders, questions, brief content, and research activity. No API routes, server actions, fetch calls, model calls, or persistence layer exist. Product accuracy, freshness, privacy, and integration reliability are untested. |
-| ALPHA-02 | High | Success messages overstate actions that do not occur. | Copy to Notion, share with AE, save notes, clipboard copy, PDF export, and CRM approval update local status or display a toast only ([`components/views/meeting-brief-view.tsx`, lines 98–106 and 133–136](../components/views/meeting-brief-view.tsx#L98)). Users could reasonably believe data was sent or saved. |
+| ALPHA-02 | Resolved for moderated prototype use | Integration actions are simulated. | Copy to Notion, teammate sharing, note saving, clipboard copy, PDF export, and CRM approval remain local simulations, but their dialogs, inline disclosures, and status messages now explicitly identify demonstration, session-only, or no-send/no-write behavior. Real integrations remain a production prerequisite. |
 | ALPHA-03 | High | No automated regression or accessibility suite exists. | `package.json` contains only dev, build, and TypeScript scripts. Readiness edge cases, state transitions, dialogs, keyboard behavior, and critical journeys are not protected. |
-| ALPHA-04 | High | Brief reordering is not keyboard accessible. | Framer Motion `Reorder` supports pointer dragging here, but no alternate controls or live positional feedback are implemented. |
-| ALPHA-05 | Medium | Brief generation can complete automatically, bypassing the explicit generation action. | When research reaches 100%, the app sets `briefGenerated` to true and announces that the draft is ready ([`components/meeting-prep-app.tsx`, lines 66–71](../components/meeting-prep-app.tsx#L66)). This can skip the “Generate brief” interaction in [`MeetingBriefView`](../components/views/meeting-brief-view.tsx#L55) and makes the mental model ambiguous. |
+| ALPHA-04 | Resolved | Brief reordering needed a keyboard alternative. | Every section now has contextual Move up/Move down controls, disabled boundary states, and a polite live positional announcement. |
+| ALPHA-05 | Medium | Brief generation can complete automatically, bypassing the explicit generation action. | When research reaches 100%, the app sets `briefGenerated` to true and announces that the draft is ready ([`components/meeting-prep-app.tsx`, lines 77–82](../components/meeting-prep-app.tsx#L77)). This can skip the “Generate brief” interaction in [`MeetingBriefView`](../components/views/meeting-brief-view.tsx#L58) and makes the mental model ambiguous. |
 | ALPHA-06 | Medium | User edits and workflow state are not persisted. | All state is component-local React state. Refreshing the page resets research, question selection, review state, notes, edits, share state, and reflection decisions. |
-| ALPHA-07 | Medium | Some textareas lack programmatic labels. | Overview notes and private brief notes are identified visually but not through `label`, `aria-label`, or `aria-labelledby`. |
-| ALPHA-08 | Medium | Readiness state can become stale after content changes. | Once a section is marked reviewed, later editing or deleting brief blocks does not clear review. The brief becomes incomplete only when every block is removed; material edits do not require re-review. |
-| ALPHA-09 | Medium | Generated brief content is not actually derived from selected questions or live research. | The selected count changes explanatory copy, but the generated blocks come from the fixed `initialBrief` array ([`components/views/meeting-brief-view.tsx`, lines 45–61](../components/views/meeting-brief-view.tsx#L45)). |
+| ALPHA-07 | Resolved | Some textareas lacked programmatic labels. | Overview notes, private brief notes, share notes, CRM fields, and reflection fields now expose contextual accessible names. |
+| ALPHA-08 | Resolved | Readiness state could become stale after content changes. | Editing, adding, removing, blank-starting, or reordering brief content now invalidates brief review and returns a stale Ready status to Draft. Other readiness regressions also clear Ready. |
+| ALPHA-09 | Medium | Generated brief content is not actually derived from selected questions or live research. | The selected count changes explanatory copy, but the generated blocks come from the fixed `initialBrief` array ([`components/views/meeting-brief-view.tsx`, lines 48 and 74–80](../components/views/meeting-brief-view.tsx#L48)). |
 | ALPHA-10 | Low | Heading hierarchy can be clearer. | The meeting shell and brief document both render `h1`; card headings also begin at `h3` through the shared `CardTitle` primitive without always having an intervening `h2`. |
 | ALPHA-11 | Low | “Lint” does not perform linting. | Both `lint` and `check` execute TypeScript only, which can create a false expectation in CI or documentation. |
 
@@ -115,10 +115,10 @@ The repository does not include usable commit history in this workspace, so chro
 - Integration actions do not perform real work and should be labeled “Simulated” or disabled outside moderated testing.
 - There is no persistence, undo history for most edits, autosave, conflict handling, or offline/retry behavior.
 - There are no authentication, permissions, tenant-isolation, secret-management, audit-log, privacy, or retention controls.
-- There is no provenance model beyond display strings; users cannot open source records, assess freshness, or resolve conflicting evidence.
+- There is no production provenance model beyond display strings; users can inspect sample titles, dates, locations, excerpts, and generic example-domain links, but cannot open exact source records or resolve conflicting evidence.
 - There is no prompt-injection defense, model-output schema validation, groundedness measurement, hallucination evaluation, or sensitive-data policy enforcement.
 - Loading is deterministic and timer-driven; network latency, partial API failure, rate limiting, expired credentials, and stale data are not represented.
-- Readiness completion is rule-based and can become stale after edits; it does not measure factual quality or actual user comprehension.
+- Readiness completion is rule-based and now invalidates after relevant edits, but it still does not measure factual quality or actual user comprehension.
 - Copy, sharing, export, CRM queueing, and Notion workflows are unverified.
 - Automated unit, component, integration, end-to-end, accessibility, visual, and performance tests are absent.
 - Browser, screen-reader, keyboard-only, touch, zoom/reflow, contrast, and cross-browser testing remain to be completed.
@@ -128,7 +128,7 @@ The repository does not include usable commit history in this workspace, so chro
 
 The prototype is successful as an internal alpha artifact. It demonstrates a credible workflow, strong information hierarchy, careful progressive states, appropriate human oversight, and unusually good accessibility foundations for this stage. The code is compact, understandable, strictly typed, and production-buildable.
 
-Its greatest risk is trust calibration. The interface looks and speaks like a connected product while its actions are simulations. For moderated internal evaluation this is manageable if participants are told that no data leaves the prototype. For any unmoderated or customer-facing beta, the current success messages, fixed evidence, and absent persistence would produce misleading expectations and potentially unsafe workflow behavior.
+Its greatest risk is trust calibration. The interface now repeatedly labels sample data and simulated outcomes, but its polished connected-product framing can still outpace its actual capabilities. For moderated internal evaluation this is manageable when participants are told that no data leaves the prototype. For any unmoderated or customer-facing beta, fixed evidence, absent persistence, and unavailable integrations would still produce misleading expectations and potentially unsafe workflow behavior.
 
 ## Recommendation for Beta Readiness
 
@@ -140,7 +140,7 @@ Before external beta promotion, complete these release gates:
 2. Replace simulated success messages with real integrations, or visibly label every unavailable action as a prototype simulation.
 3. Add persistence, error states, retries, timeouts, cancellation, and recovery for research, generation, sharing, export, and CRM operations.
 4. Add unit tests for readiness rules and stale-review invalidation; component tests for editing and dialogs; and end-to-end tests for preparation, partial research, brief sharing, and reflection.
-5. Add automated accessibility checks plus manual keyboard, VoiceOver, contrast, zoom/reflow, and mobile touch testing. Provide keyboard alternatives for brief reordering and programmatic labels for all textareas.
+5. Add automated accessibility checks plus manual keyboard, VoiceOver, contrast, zoom/reflow, and mobile touch testing; validate the implemented reorder controls, labels, focus behavior, and live announcements with assistive technology.
 6. Establish AI evaluation criteria for groundedness, attribution, freshness, uncertainty, harmful or sensitive output, and prompt-injection resistance using representative SDR scenarios.
 7. Implement authentication, least-privilege authorization, tenant isolation, auditability, and explicit handling rules for CRM, calendar, and prospect data.
 8. Clarify brief-generation semantics: either auto-generate and label it as such, or require an explicit user action consistently.

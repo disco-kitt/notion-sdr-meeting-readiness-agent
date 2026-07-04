@@ -1,38 +1,41 @@
 flowchart LR
   subgraph SDR[SDR]
     direction LR
-    record([Record Reflection<br/>Priorities • Objections • Next steps]) --> label([Label Assumptions<br/>Correct • Incorrect • Unknown])
-    review{Review CRM Draft}
-    approve([Approve])
-    edit([Edit])
-    discard([Discard])
+    open([Open Lumon Debrief<br/>Sidebar or More actions])
+    record([Review or Edit Reflection<br/>Priorities • Risks • Next steps])
+    label([Label 3 Assumptions<br/>Correct • Incorrect • Unknown])
+    crm([Review CRM Draft<br/>Session-only sample data])
+    resolve{Resolve CRM Draft}
+    edit([Edit Fields and Finish])
+    approve([Approve Demo Draft])
+    discard([Discard Draft])
+    complete([Complete Reflection])
   end
-  subgraph SYS[System]
+  subgraph SYS[Prototype System]
     direction LR
-    prompt([Reflection Prompt])
-    discarded([Discard CRM Draft])
+    all{All 3 Labeled?}
+    discarded([Draft Discarded<br/>May restore before completion])
+    resolved{CRM Draft Resolved?}
+    done([Reflection Complete<br/>Fields lock • Nav badge updates])
   end
-  subgraph AI[AI / Orchestration]
+  subgraph AI[Demonstration Automation]
     direction LR
-    crm_draft([Draft CRM Updates])
-    revise([Revise CRM Draft])
-    refine([Refine Future Recommendations])
+    feedback([Show Learning Feedback<br/>No external system changed])
   end
-  subgraph EXT[External Data]
-    direction LR
-    meeting_end([Meeting Ends])
-    apply([Apply CRM Updates])
-  end
-  meeting_end --> prompt --> record
-  label --> crm_draft --> review
-  review -- Approve --> approve --> apply --> refine
-  review -- Edit --> edit --> revise -->|Review again| review
-  review -- Discard --> discard --> discarded --> refine
-  class record,label,approve,edit,prompt,crm_draft,revise action;
-  class review decision;
-  class meeting_end,apply external;
+  open --> record --> label --> all
+  all -- No --> label
+  all -- Yes --> crm --> resolve
+  resolve -- Edit --> edit -->|Done| crm
+  resolve -- Approve --> approve --> feedback --> resolved
+  resolve -- Discard --> discard --> discarded
+  discarded -. Restore .-> crm
+  discarded -->|Keep discarded| resolved
+  resolved -- No --> crm
+  resolved -- Yes --> complete --> done
+  class open,record,label,crm,edit,approve,complete,feedback action;
+  class all,resolve,resolved decision;
   class discard,discarded secondary;
-  class refine status;
+  class done status;
 classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
 classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
 classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;

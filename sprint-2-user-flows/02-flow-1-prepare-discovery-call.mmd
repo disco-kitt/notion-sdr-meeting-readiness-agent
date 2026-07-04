@@ -1,34 +1,40 @@
 flowchart LR
   subgraph SDR[SDR]
     direction LR
-    workspace([Open Workspace]) --> overview([Review Overview]) --> signals([Review Signals]) --> stakeholders([Review Stakeholders]) --> questions([Select Questions]) --> recommendations([Review Recommendations])
-    notes([Add Notes]) --> share_decision{Share with AE?}
+    workspace([Open Meeting Workspace])
+    choose{Choose Any Incomplete Task}
+    signals([Review Priority Signals])
+    stakeholders([Confirm Stakeholders])
+    questions([Select at Least 3 Questions])
+    brief([Generate and Review Brief<br/>Must contain a section])
+    mark_ready([Mark Meeting Ready])
   end
-  subgraph SYS[System]
+  subgraph SYS[Prototype System]
     direction LR
-    identify([Identify Company & Attendees<br/>Match CRM record])
-    share([Share with AE])
-    draft([Keep Draft])
+    meeting([Sample Meeting Available<br/>Simulates meeting detection])
+    panel([Readiness Panel<br/>Shows progress and next step])
+    readiness{All 5 Conditions Complete?}
+    draft([Remain in Preparation])
     ready([Meeting Ready])
   end
-  subgraph AI[AI / Orchestration]
+  subgraph AI[Demonstration Automation]
     direction LR
-    research([Start Research])
-    brief([Generate Brief])
+    research([Simulated Research Starts])
+    research_complete([Research Reaches 100%])
   end
-  subgraph EXT[External Data]
-    direction LR
-    meeting([Meeting Appears])
-  end
-  meeting --> identify --> research --> workspace
-  recommendations --> brief --> notes
-  share_decision -- Yes --> share --> ready
-  share_decision -- No --> draft --> ready
-  class workspace,overview,signals,stakeholders,questions,recommendations,notes,identify,share,research,brief action;
-  class share_decision decision;
-  class meeting external;
+  meeting --> research --> workspace --> panel --> choose
+  research -->|Runs in background| research_complete
+  choose -- Signals --> signals --> readiness
+  choose -- People --> stakeholders --> readiness
+  choose -- Questions --> questions --> readiness
+  choose -- Brief --> brief --> readiness
+  research_complete --> readiness
+  readiness -- No --> draft -->|Continue in any order| choose
+  readiness -- Yes --> mark_ready --> ready
+  class workspace,signals,stakeholders,questions,brief,mark_ready,meeting,panel,research action;
+  class choose,readiness decision;
   class draft secondary;
-  class ready status;
+  class research_complete,ready status;
 classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
 classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
 classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;

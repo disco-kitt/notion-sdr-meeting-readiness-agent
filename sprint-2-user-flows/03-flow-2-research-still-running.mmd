@@ -1,30 +1,37 @@
 flowchart LR
   subgraph SDR[SDR]
     direction LR
-    workspace([Open Partial Workspace])
+    start([Open Workspace at 46%])
+    partial([Use Available Tabs<br/>Review revealed sample data])
+    draft([Generate Partial Draft<br/>Optional])
+    prep([Continue Readiness Tasks])
   end
-  subgraph SYS[System]
+  subgraph SYS[Prototype System]
     direction LR
-    detected([Meeting Detected])
-    states([Show Card States<br/>Loading • Complete • Updating])
-    ready([Workspace Ready])
+    banner([Show Research Banner<br/>Progress • Sample activity])
+    impact{Progress Reaches 78%?}
+    toast([Show High-Impact Toast<br/>Recommendations updated])
+    complete{Progress Reaches 100%?}
+    ready([Research Gate Complete])
+    restart([Restart Demo to 46%])
   end
-  subgraph AI[AI / Orchestration]
+  subgraph AI[Demonstration Automation]
     direction LR
-    research([Research Begins])
-    populate([Populate Results Live]) --> impact{High-Impact Insight?}
-    refresh([Refresh Brief])
-    continue([Continue Research])
-    complete([Research Complete])
+    advance([Advance Timed Progress<br/>No live integrations])
+    continue([Continue Timed Progress])
+    auto([Create Brief Draft<br/>If not already generated])
   end
-  detected --> research --> workspace --> states --> populate
-  impact -- Yes --> refresh --> complete
-  impact -- No --> continue --> complete
-  complete --> ready
-  class workspace,detected,states,research,populate,refresh action;
-  class impact decision;
-  class continue secondary;
-  class complete,ready status;
+  start --> banner --> partial --> advance --> impact
+  partial -. Optional .-> draft
+  impact -- Yes --> toast --> complete
+  impact -- No --> complete
+  complete -- No --> continue --> advance
+  complete -- Yes --> auto --> ready --> prep
+  ready -. Demo control .-> restart --> banner
+  class start,partial,prep,banner,toast,advance,auto action;
+  class impact,complete decision;
+  class draft,continue,restart secondary;
+  class ready status;
 classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
 classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
 classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;

@@ -7,7 +7,7 @@
 
 ## Research limitation
 
-This is an expert simulation, not a study with 12 human participants. Each persona completed the same five-step preparation path as a cognitive walkthrough: orient and review research, review signals, confirm people, curate questions, review the brief, and mark the meeting ready. The prototype was exercised live; persona-specific expectations and likely impacts are hypotheses grounded in observable interface behavior. The share confirmation was inspected but no external message was sent. Production persistence and real integrations were not validated.
+This is an expert simulation, not a study with 12 human participants. Each persona completed the same five-gate preparation path as a cognitive walkthrough—research, signals, people, questions, and brief review—followed by a separate overall meeting-readiness confirmation. The prototype was exercised live; persona-specific expectations and likely impacts are hypotheses grounded in observable interface behavior. The share confirmation was inspected but no external message was sent. Production persistence and real integrations were not validated.
 
 ## Severity scale
 
@@ -27,7 +27,7 @@ The observed readiness path was:
 2. Review strategic signals and explicitly mark them reviewed.
 3. Inspect and, if needed, change each participant's inferred role; confirm the map.
 4. Keep or add at least three questions.
-5. Review/edit the generated brief, finish review, then separately mark the meeting ready.
+5. Review/edit the generated brief, select **Complete brief review**, then separately mark the meeting ready.
 
 ## At-a-glance persona results
 
@@ -36,9 +36,9 @@ The observed readiness path was:
 | New SDR | Completed | High | S2 | Unexplained sales shorthand and weak evidence depth |
 | Senior SDR | Completed | High | S2 | Verification and control are shallower than expert needs |
 | Enterprise BDR | Completed | High | S3 | No account hierarchy, governance, or multi-threading depth |
-| AE preparing for discovery | Completed | Medium-high | S2 | “Share with AE” assumes the user is not the AE |
+| AE preparing for discovery | Completed | Medium-high | S2 | Sharing uses a fixed teammate rather than a role-aware recipient |
 | Sales Manager reviewing readiness | Completed | Medium | S3 | Individual prep flow lacks manager review, audit, and portfolio views |
-| SDR with accessibility needs | Completed with barriers | Medium-high | S3 | Brief reordering has no keyboard-operable alternative |
+| SDR with accessibility needs | Completed with minor barriers | Medium-high | S2 | Dense microcopy and unvalidated assistive-technology behavior remain |
 | University Career Advisor | Completed by translation | Medium-low | S3 | Company/buying-group model does not match student advising |
 | Employer Engagement Coordinator | Completed by translation | Medium | S2 | Employer relationship work mostly fits, but sales labels distort it |
 | Customer Success Manager | Completed by translation | Medium-high | S2 | Account model fits; discovery and AE-sharing assumptions do not |
@@ -58,13 +58,13 @@ The observed readiness path was:
 | 2. Review signals | “Explain why a change matters; do not make me infer the sales angle.” | Completed. Signals included plain-language implications and a suggested opening. “Mark reviewed” advanced readiness immediately. |
 | 3. Confirm people | “Show me who these people are and let me say when the AI is unsure.” | Completed. Each buying role was editable and included **Unknown**; a changed/unverified warning appeared before confirmation. |
 | 4. Curate questions | “Give me a safe sequence and prevent me from arriving with no plan.” | Completed. Three questions were preselected, rationale was visible, custom questions were supported, and the minimum was enforced. |
-| 5. Review brief and finish | “Let me make small edits, then clearly tell me when I am done.” | Completed. Section edits and private notes were available. “Finish review” was followed by the separate “Mark meeting ready” action. |
+| 5. Review brief and finish | “Let me make small edits, then clearly tell me when I am done.” | Completed. Section edits and private notes were available. **Complete brief review** was followed by the separate **Mark meeting ready** action. |
 
 **Usability issues and severity**
 
 - **S2:** CRO, RevOps, ARR, buying group, champion, AE, and outbound sequence are not defined in context. A first-week rep may complete the flow without understanding the concepts being confirmed.
 - **S2:** Source cards look credible but link to generic domains rather than the exact CRM record or article; novice users may over-trust the synthesis.
-- **S1:** “Finish review” followed by “Mark meeting ready” feels like two final actions for one concept.
+- **S1:** **Complete brief review** followed by **Mark meeting ready** feels like two final actions for one concept.
 
 **Information architecture:** Strong match. It mirrors a novice’s likely sequence: why now → signals → people → questions → brief.  
 **Universally valuable:** Guided readiness checklist, freshness, source evidence, question rationale, editable brief.  
@@ -126,15 +126,15 @@ The observed readiness path was:
 | 2. Review signals | “Connect evidence to a hypothesis I can test.” | Completed. Signal rationale and suggested opening provide a usable bridge. |
 | 3. Confirm people | “Clarify power, influence, and what each person may care about.” | Completed, with editable roles and room-navigation advice. |
 | 4. Curate questions | “Build a coherent discovery arc, not a checklist.” | Mostly completed. Sequence and rationale help, but the mandatory count emphasizes quantity over coverage. |
-| 5. Review brief and finish | “Share with my SE, manager, or team—not with myself.” | Core review completed, but the primary share action changes to **Share with AE** and names a hard-coded AE recipient. |
+| 5. Review brief and finish | “Share with my SE, manager, or team—not with myself.” | Core review completed, but sharing targets the fixed teammate Devon Scott rather than allowing the user to choose an SE, manager, or team. |
 
 **Usability issues and severity**
 
-- **S2:** The interface assumes the preparer is an SDR; **Share with AE** is nonsensical when the AE is the current user.
+- **S2:** The workspace remains SDR-oriented, and the fixed teammate recipient does not adapt when the preparer is the AE.
 - **S2:** No meeting-type or role setup changes the generated strategy for AE-owned discovery.
 - **S1:** Question quality/coverage is not evaluated; only a minimum count is enforced.
 
-**Terminology:** Familiar. “Prepared for Devon Scott” and the hard-coded Alex Rivera recipient expose role assumptions.  
+**Terminology:** Familiar. “Prepared for Devon Scott” and the fixed Devon Scott share recipient expose role assumptions.
 **Information architecture:** Strong through the brief; collaboration architecture is SDR-to-AE rather than team-based.  
 **Universally valuable:** Hypothesis, evidence, participant context, editable brief.  
 **Sales-specific:** Discovery arc and account-team sharing; recipient logic should be role-aware.
@@ -168,21 +168,20 @@ The observed readiness path was:
 
 | Task | Expectation before the task | Observed outcome |
 |---|---|---|
-| 1. Orient and review research | “Expose structure, progress, labels, and updates without relying on color or motion.” | Mostly met. Headings, progress semantics, focus styles, live status, and reduced-motion CSS exist. The progress bar has a numeric value but no contextual accessible name. |
+| 1. Orient and review research | “Expose structure, progress, labels, and updates without relying on color or motion.” | Mostly met. Headings, contextually named progress bars, focus styles, live status, and reduced-motion CSS exist. |
 | 2. Review signals | “Every repeated control should identify its target.” | Completed. Save controls include the signal title, filters expose pressed state, and review status is explicit. |
 | 3. Confirm people | “Role fields must name the person and support uncertainty.” | Completed. Each select is named for the person and includes **Unknown**. |
 | 4. Curate questions | “Selection controls should read the full question and announce state.” | Completed. Controls include full question text and pressed state. The sticky status announces the count. |
-| 5. Review brief and finish | “I need keyboard alternatives for every edit, remove, and reorder action.” | Partly met. Edit/remove controls are contextual, but drag reordering is visual/pointer-based and the drag handle is hidden from assistive technology. |
+| 5. Review brief and finish | “I need keyboard alternatives for every edit, remove, and reorder action.” | Completed in the release candidate. Edit/remove controls are contextual, and every section has Move up/Move down controls with a live positional announcement in addition to pointer dragging. |
 
 **Usability issues and severity**
 
-- **S3:** Brief section reordering has no keyboard or screen-reader alternative such as Move up/Move down.
-- **S2:** Progress bars expose values but not contextual labels such as “Research progress” or “Reflection progress.”
+- **S2:** Implemented keyboard reordering and live announcements still require manual screen-reader and keyboard-path validation.
 - **S2:** Dense 10–11 px supporting text and low-emphasis muted labels may create zoom/low-vision fatigue.
 - **S1:** Mobile tabs are horizontally scrollable, but the new **More** cue materially improves discoverability and successfully reveals the hidden Brief tab.
 
 **Terminology:** Same novice jargon burden as the new SDR, amplified for screen-reader users when abbreviations are not expanded.  
-**Information architecture:** Logical landmarks and tab structure; drag-and-drop is the principal interaction mismatch.  
+**Information architecture:** Logical landmarks and tab structure; both pointer and keyboard reorder paths are available.
 **Universally valuable:** Contextual accessible names, focus indicators, reduced motion, explicit states.  
 **Sales-specific:** None of the accessibility needs are sales-specific; fixes should be platform-wide.
 
@@ -244,7 +243,7 @@ The observed readiness path was:
 | 2. Review signals | “Prioritize changes that affect value realization or risk.” | Concept transfers well; signal categories and suggested opening need a customer-success mode. |
 | 3. Confirm people | “Map sponsor, admin, power user, detractor, and executive owner.” | Editable roles help, but sales buying roles omit success-specific relationship states. |
 | 4. Curate questions | “Use meeting-type templates for QBR, renewal, risk, or expansion.” | Custom questions work; generic discovery sequence is too acquisition-oriented. |
-| 5. Review brief and finish | “Share with my account team and preserve commitments.” | Brief transfers strongly. “Share with AE” may sometimes fit, but recipient and workflow must be selectable. |
+| 5. Review brief and finish | “Share with my account team and preserve commitments.” | Brief transfers strongly. The generic share action fits, but its fixed teammate recipient and workflow must become selectable. |
 
 **Usability issues and severity**
 
@@ -290,7 +289,7 @@ The observed readiness path was:
 | 2. Review signals | “Surface mission-relevant changes without turning them into manipulative urgency.” | Signal concept transfers, but the suggested opening is optimized for commercial urgency. |
 | 3. Confirm people | “Map donor, advisor, family, board connection, program leader, and internal owner.” | Stakeholder mapping transfers; buying roles do not capture philanthropic relationships. |
 | 4. Curate questions | “Help me prepare respectful, values-centered questions.” | Question customization transfers well; the rationale language needs a stewardship/fundraising mode. |
-| 5. Review brief and finish | “Create a sensitive, share-controlled brief with commitments and stewardship next steps.” | Brief transfers; hard-coded AE sharing and generic evidence controls are insufficient for sensitive donor context. |
+| 5. Review brief and finish | “Create a sensitive, share-controlled brief with commitments and stewardship next steps.” | Brief transfers; a fixed teammate recipient and generic evidence controls are insufficient for sensitive donor context. |
 
 **Usability issues and severity**
 
@@ -333,7 +332,7 @@ The observed readiness path was:
 
 1. **Enterprise readiness is overstated (S3).** A five-item checklist works for a simple discovery call but does not account for hierarchy, multi-threading, opportunity context, security/legal workstreams, or missing buying roles.
 2. **Manager readiness is not supported (S3).** Managers need a team queue, quality rubric, comments, request-changes, audit history, and risk aggregation rather than an individual completion checklist.
-3. **The user role is hard-coded as SDR (S2).** AE users see **Share with AE**; collaboration does not adapt to SDR, BDR, AE, SE, manager, or account-team ownership.
+3. **The workspace and recipient logic remain SDR-oriented (S2).** The action now says **Share draft** or **Share brief**, but collaboration still uses a fixed teammate and does not adapt to SDR, BDR, AE, SE, manager, or account-team ownership.
 4. **Expert verification depth is limited (S2).** Exact CRM records, source conflicts, claim lineage, and late-research changes are not inspectable enough for high-stakes selling.
 5. **Sales readiness measures completion more than quality (S2).** Review clicks and a question count do not establish that the meeting hypothesis, stakeholder map, or questions are good.
 
@@ -343,7 +342,7 @@ The observed readiness path was:
 2. **Buying-role labels can be inappropriate (S3).** Decision maker, champion, and evaluator may be usable in sales but can create ethically or conceptually wrong classifications for students, applicants, families, donors, and partners.
 3. **Privacy and sensitivity controls are absent (S3).** Education, advising, donor, and executive briefing contexts require clearer consent, access, sensitivity, provenance, and retention controls.
 4. **The mandatory discovery model does not transfer (S2).** Some meetings are for advising, stewardship, decision support, relationship maintenance, escalation, or protocol—not discovery.
-5. **Sharing assumes an AE handoff (S2).** Adjacent professions need a selectable recipient, audience, permission, and purpose.
+5. **Sharing assumes a fixed teammate handoff (S2).** Adjacent professions need a selectable recipient, audience, permission, and purpose.
 
 ### Universal usability issues
 
@@ -352,8 +351,8 @@ The observed readiness path was:
 3. **A three-question minimum is arbitrary (S2).** It encourages filler and prevents meeting-type-specific readiness criteria.
 4. **Role and meeting type are never established (S2).** The product cannot adapt language, required steps, brief structure, or recipient without knowing who is preparing what kind of meeting.
 5. **No visible persistence or version history (S2).** Edits produce transient confirmation, but users cannot inspect save state, authorship, version lineage, or late AI changes.
-6. **Brief reordering is not keyboard accessible (S3).** The drag handle is hidden from assistive technology and no Move up/Move down controls exist.
-7. **Two final gates are mildly confusing (S1).** **Finish review** and **Mark meeting ready** represent related concepts without explaining their distinction.
+6. **Reorder accessibility requires validation (S2).** Move up/down controls and a live announcement are implemented, but have not been validated with assistive technology.
+7. **Two final gates are mildly confusing (S1).** **Complete brief review** and **Mark meeting ready** represent related concepts without explaining their distinction.
 8. **Dense low-emphasis microcopy (S2).** Frequent 10–11 px labels increase cognitive and low-vision burden.
 
 ### Universally valuable capabilities
@@ -388,17 +387,17 @@ The observed readiness path was:
 7. **Separate preparation completion from quality assurance.** Track Prepared by, Reviewed by, exceptions, comments, requested changes, and approval. This unlocks sales managers and high-sensitivity adjacent use cases.
 8. **Support multiple subject models.** Organization/account, person, household, constituent, leader, and meeting should be first-class rather than forcing everything into an account.
 9. **Add sensitivity and access controls.** Section-level sensitivity, source permissions, audience preview, and retention policy are essential outside sales and useful for enterprise sales.
-10. **Add accessible ordering controls.** Move up/down actions should accompany drag-and-drop everywhere.
+10. **Validate accessible ordering controls.** Test the implemented Move up/down actions and live position announcements with keyboard and screen-reader users.
 
 ## Prioritized release recommendations
 
 ### Must address before production release
 
-1. Add keyboard-accessible brief ordering (**S3**).
-2. Replace prototype/generic evidence links with exact source records and auditable claim lineage (**S2**, trust-critical).
-3. Validate persistence, permissions, real sharing, CRM/Notion writes, error recovery, and duplicate-action safety (**S3** if absent in production).
-4. Make user role and share recipient explicit; remove the hard-coded SDR-to-AE assumption (**S2**).
-5. Distinguish readiness completion from quality/approval, especially for manager review (**S3**).
+1. Replace prototype/generic evidence links with exact source records and auditable claim lineage (**S2**, trust-critical).
+2. Validate persistence, permissions, real sharing, CRM/Notion writes, error recovery, and duplicate-action safety (**S3** if absent in production).
+3. Make user role and share recipient explicit; replace the fixed SDR-oriented teammate handoff with role-aware selection (**S2**).
+4. Distinguish readiness completion from quality/approval, especially for manager review (**S3**).
+5. Validate keyboard ordering and live announcements with assistive technology (**S2**).
 
 ### Must address before positioning as cross-profession
 
@@ -411,7 +410,7 @@ The observed readiness path was:
 
 **Recommendation: Ready for a moderated SDR/AE pilot; not ready for production general availability or cross-profession positioning.**
 
-For the Notion SDR use case, the product has a coherent and appealing end-to-end story. The live workflow is completable, the next action is clear, stakeholder corrections are now supported, mobile section discovery works, and the brief is meaningfully editable. The main gaps are trustworthy source-level verification, accessible reordering, role-aware collaboration, quality/audit controls, and validation of real persistence and integrations.
+For the Notion SDR use case, the product has a coherent and appealing end-to-end story. The live workflow is completable, the next action is clear, stakeholder corrections are supported, mobile section discovery works, and the brief is meaningfully editable with pointer and keyboard ordering. The main gaps are trustworthy source-level verification, assistive-technology validation, role-aware collaboration, quality/audit controls, and validation of real persistence and integrations.
 
 For adjacent professions, the universal preparation engine is promising, but the current product is not merely “sales-flavored”; its objects, roles, required steps, recommendations, recipient, and follow-up system are structurally sales-specific. Generalization should be implemented through domain profiles that preserve the current SDR template intact, not through global find-and-replace terminology.
 

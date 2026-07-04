@@ -1,28 +1,27 @@
 flowchart LR
   subgraph SDR[SDR]
     direction LR
-    overview([Overview]) --> signals([Signals]) --> stakeholders([Stakeholders]) --> questions([Discovery Questions]) --> recommendations([Recommendations]) --> brief([Meeting Brief])
-    reflection([Post-Meeting Reflection])
+    workspace([Workspace Opens]) --> tasks([Complete Readiness Work<br/>Flexible order across tabs]) --> brief_review([Review Meeting Brief])
+    continue([Continue Preparation])
+    confirm([Mark Meeting Ready])
   end
-  subgraph SYS[System]
+  subgraph SYS[Prototype System]
     direction LR
-    detected([Meeting Detected])
+    detected([Meeting Detected<br/>Prototype scenario])
+    all_ready{All 5 Conditions Complete?}
+    ready([Meeting Ready])
   end
-  subgraph AI[AI / Orchestration]
+  subgraph AI[Demonstration Automation]
     direction LR
-    research([Research Initiated])
+    research([Simulated Research Begins<br/>Sample data • Timed progress])
   end
-  subgraph EXT[External Data]
-    direction LR
-    calendar([Calendar])
-    meeting([Meeting])
-    crm([CRM Update])
-  end
-  calendar --> detected --> research --> overview
-  brief --> meeting --> reflection --> crm
-  class overview,signals,stakeholders,questions,recommendations,brief,reflection,detected,research action;
-  class calendar,meeting external;
-  class crm status;
+  detected --> research --> workspace
+  brief_review --> all_ready
+  all_ready -- No --> continue -->|Choose any incomplete task| tasks
+  all_ready -- Yes --> confirm --> ready
+  class workspace,tasks,brief_review,continue,confirm,detected,research action;
+  class all_ready decision;
+  class ready status;
 classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
 classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
 classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;

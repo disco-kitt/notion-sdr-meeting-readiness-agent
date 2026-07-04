@@ -4,6 +4,8 @@
 > **Experience promise:** Turn a booked discovery meeting into a grounded, editable, meeting-ready brief in under five minutes—without hiding uncertainty or writing to customer systems without review.  
 > **Blueprint scope:** Meeting detection → progressive research → preparation → brief delivery → post-meeting reflection and CRM handoff.
 
+> **Implementation boundary:** The diagram and Sections 2–8 define the target production service contract. They intentionally include orchestration, persistence, integrations, provenance, delivery receipts, and failure recovery that are not implemented in the release-candidate prototype. Section 9 is the source of truth for demonstrated prototype behavior.
+
 ```mermaid
 flowchart LR
   subgraph U["USER · SDR / AE"]
@@ -20,7 +22,7 @@ flowchart LR
   end
   subgraph D["DATA / INTEGRATIONS"]
     direction LR
-    D0[(Calendar)] --> D1[(CRM)] --> D2[(People and company web)] --> D3[(Evidence store)] --> D4[(User decisions)] --> D5[(Versioned brief)] --> D6[(Notion / AE channel / export)] --> D7[(CRM + audit log)]
+    D0[(Calendar)] --> D1[(CRM)] --> D2[(People and company web)] --> D3[(Evidence store)] --> D4[(User decisions)] --> D5[(Versioned brief)] --> D6[(Notion / teammate channel / export)] --> D7[(CRM + audit log)]
   end
   subgraph T["TRUST & RECOVERY"]
     direction LR
@@ -57,7 +59,7 @@ flowchart LR
   class F1,F2,F3,F4,F5 failure;
 ```
 
-> Editable full-size diagram: [`sprint-2-service-blueprint.mmd`](./sprint-2-service-blueprint.mmd). Paste it into Mermaid Live, Notion, GitHub, or diagrams.net (**Arrange → Insert → Advanced → Mermaid**) to restyle or export it.
+> Editable full-size diagram: [`sprint-2-service-blueprint.mmd`](./sprint-2-service-blueprint.mmd). The embedded diagram above is the current Markdown reference; regenerate the standalone source after terminology changes. Paste it into Mermaid Live, Notion, GitHub, or diagrams.net (**Arrange → Insert → Advanced → Mermaid**) to restyle or export it.
 
 ## 1. Blueprint at a glance
 
@@ -74,15 +76,15 @@ The five readiness gates are **research complete, priority signals reviewed, sta
 - **Claims, not vibes:** consequential synthesis carries claim-level evidence, freshness, and uncertainty—not only a source count.
 - **Human decisions are durable inputs:** edits, role corrections, question choices, and assumption labels constrain downstream generation.
 - **Review follows change:** a material late finding or user edit invalidates the affected review state and identifies what changed.
-- **No silent side effects:** sharing, exporting, and CRM writes return a real receipt or a recoverable failure state.
+- **No silent side effects:** in the target service, sharing, exporting, and CRM writes return a real receipt or a recoverable failure state. The current prototype instead labels these actions as simulations.
 - **Permission-aware by design:** every retrieval and write respects the user’s source permissions and is represented in the audit trail.
 
 ## 2. End-to-end service blueprint
 
 | Layer | 0. Trigger | 1. Resolve context | 2. Research progressively | 3. Review and confirm | 4. Curate discovery | 5. Build and verify brief | 6. Deliver and become ready | 7. Reflect and update CRM |
 |---|---|---|---|---|---|---|---|---|
-| **User actions** | Books or receives a calendar meeting. | Opens the workspace; checks meeting, account, and attendee identity. | Reviews completed cards while remaining sources update. | Reviews signals; corrects or confirms each stakeholder role. | Selects at least three suggested questions or adds custom ones. | Generates a partial or complete brief; edits, removes, adds, and reorders sections; verifies important claims. | Keeps a draft, copies to Notion, exports, or shares with the named AE; marks the meeting ready once gates pass. | Records priorities, objections, and next steps; labels every assumption; edits, approves, or discards the CRM draft; completes reflection. |
-| **Visible service / UI** | Meeting appears in Today with time, attendees, and preparation status. | Header shows matched company, attendees, source freshness, and any ambiguity. | Banner exposes overall progress plus per-source Loading, Updating, Complete, Failed, or Stale states. Cards stream in without layout loss. | Readiness panel routes to the next incomplete action. Signals show impact, source, timing, and confidence. Stakeholder roles are editable with Unknown available. | Recommended sequence explains why each question matters; the three-question minimum is visible and recoverable. | Brief is labeled AI draft, names its source set and freshness, and marks changed sections. Review controls are contextual and keyboard accessible. | Confirmation names the recipient/channel and warns when preparation is incomplete. Success includes a destination link or delivery receipt. | Reflection progress shows explicit prerequisites. Completion becomes a durable, timestamped state and clears the Due badge. |
+| **User actions** | Books or receives a calendar meeting. | Opens the workspace; checks meeting, account, and attendee identity. | Reviews completed cards while remaining sources update. | Reviews signals; corrects or confirms each stakeholder role. | Selects at least three suggested questions or adds custom ones. | Generates a partial or complete brief; edits, removes, adds, and reorders sections; verifies important claims. | Keeps a draft, previews simulated Notion copy/export, or previews sharing with a fixed named teammate; marks the meeting ready once gates pass. | Records priorities, objections, and next steps; labels every assumption; edits, approves, or discards the CRM draft; completes reflection. |
+| **Visible service / UI** | Meeting appears in Today with time, attendees, and preparation status. | Header shows matched company, attendees, and sample-source freshness. | The prototype banner exposes overall progress plus per-source Updating or Complete states; Failed and Stale are target-state additions. Cards stream in without layout loss. | Readiness panel routes to the next incomplete action. Signals show impact, source, timing, and confidence. Stakeholder roles are editable with Unknown available. | Recommended sequence explains why each question matters; the three-question minimum is visible and recoverable. | Brief is labeled as a demonstration AI draft and supports contextual editing plus pointer and keyboard reordering; changed-section marking and production citations remain target-state. | Confirmation names Devon Scott, warns when preparation is incomplete, and explicitly says nothing will be sent. Destination links and delivery receipts remain target-state. | Reflection progress shows explicit prerequisites. Completion is durable and timestamped and clears the Due badge; external CRM application remains simulated. |
 | **Orchestration / system** | Subscribe to calendar changes; create an idempotent preparation job. | Normalize domains and identities; match calendar participants to CRM/contact records; request clarification below threshold. | Fan out connector jobs; stream events; cache results; isolate failures; retry with backoff; stop superseded jobs. | Merge results into a versioned evidence graph; calculate the five readiness gates; persist user confirmations. | Persist selections and custom questions; pass them as constraints to brief generation. | Assemble a versioned draft; diff late evidence; update only affected sections; invalidate stale review when meaning changes. | Apply channel-specific delivery; notify collaborators; record actor, version, destination, and outcome; never equate “clicked” with “sent.” | Trigger a post-meeting task; structure notes; gate external writes; queue an idempotent CRM mutation; store receipt and completion record. |
 | **AI tasks** | Classify meeting type and infer preparation template. | Resolve account, people, roles, and relationship context; surface alternatives when uncertain. | Extract events and facts; deduplicate; rank relevance and impact; detect contradictions; summarize only supported claims. | Produce a why-now narrative, stakeholder hypotheses, suggested opening angle, and readiness recommendations. | Generate and sequence questions grounded in meeting goal, signals, stakeholders, and user choices. | Compose objective, why now, people, questions, and recommended angle with citations; preserve user-authored text. | Summarize the delivered version; do not autonomously decide readiness or recipient. | Map notes to CRM schema; compare outcomes with prior assumptions; propose future ranking adjustments without overwriting source facts. |
 | **Data sources / records** | Calendar event, organizer, attendees, timing, conferencing metadata. | CRM account/contact/opportunity/activity; user/team identity and permissions. | Company site/blog, approved people source, careers pages, CRM history, approved internal Notion context, retrieval timestamps. | Evidence objects, claim graph, user corrections, review events, readiness state. | Question library, selected/custom questions, meeting objective, stakeholder map. | Versioned research snapshot, user edits, citations, brief versions, private notes. | Notion page, collaboration/notification channel, export store, audit log. | Meeting outcome and user notes, assumption labels, CRM draft, CRM mutation receipt, learning events. |
@@ -121,11 +123,11 @@ The UI should derive status from durable job and artifact state rather than time
 |---|---|---|---|---|
 | Meeting classification | Calendar title, attendees, CRM opportunity stage | Meeting type and preparation template | Schema validation; low-confidence fallback to generic discovery template | SDR can change meeting goal/type. |
 | Entity resolution | Domains, names, email addresses, CRM and calendar IDs | Ranked account/contact candidates | Exact-ID preference; threshold and ambiguity check; no synthesis on an unconfirmed low-confidence match | SDR selects or corrects the match. |
-| Signal extraction | Approved source documents and metadata | Atomic fact/event candidates | Quote-span grounding, date extraction, deduplication, prompt-injection filtering | SDR can inspect, save, dismiss, or correct. |
+| Signal extraction | Approved source documents and metadata | Atomic fact/event candidates | Quote-span grounding, date extraction, deduplication, prompt-injection filtering | Target state: SDR can inspect, save, dismiss, or correct. The prototype currently supports filtering and saving only. |
 | Impact ranking | Grounded facts, meeting goal, CRM stage | Priority and high-impact labels | Explainable feature set; no factual claim created by ranking | SDR reviews before readiness gate passes. |
 | Stakeholder hypothesis | Attendee roles, activity, opportunity context | Suggested buying role and concern | Must be marked inferred unless directly recorded; Unknown allowed | Per-person edit and explicit confirmation. |
-| Discovery planning | Confirmed context, selected signals, user goal | Suggested questions, sequence, rationale | Every rationale references relevant context; diversity and repetition checks | SDR selects, removes, reorders, or adds. |
-| Brief synthesis | Versioned evidence set, confirmed roles, selected questions, user text | Structured cited draft | Required citations for factual claims; unsupported text omitted/regenerated; user text protected | SDR edits and finishes review. |
+| Discovery planning | Confirmed context, selected signals, user goal | Suggested questions, sequence, rationale | Every rationale references relevant context; diversity and repetition checks | The prototype selects, removes, or adds questions; question reordering remains target-state. |
+| Brief synthesis | Versioned evidence set, confirmed roles, selected questions, user text | Structured cited draft | Required citations for factual claims; unsupported text omitted/regenerated; user text protected | Target state: a genuinely generated, cited brief. The prototype uses fixed sample blocks and lets the SDR edit them and select **Complete brief review**. |
 | Reflection structuring | SDR notes, prior assumptions, CRM schema | CRM field draft and comparison signals | Schema and field-policy validation; never write during generation | SDR labels assumptions and edits/approves/discards. |
 
 ## 5. Confidence and provenance specification
@@ -225,7 +227,7 @@ Do not optimize only for fewer corrections. Corrections are valuable learning si
 
 - Progressive research states across CRM, people, and company sources.
 - Five-part meeting-readiness model and next-action routing.
-- Signal review, per-person stakeholder role correction, question curation, editable brief, draft-sharing disclosure, and post-meeting reflection.
+- Signal review, per-person stakeholder role correction, question curation, editable brief, simulated fixed-teammate sharing disclosure, and post-meeting reflection.
 - AI-draft labeling, confidence labels, compact source disclosure, deliberate assumption review, and controlled CRM draft approval.
 
 ### Service capabilities still required for a real beta

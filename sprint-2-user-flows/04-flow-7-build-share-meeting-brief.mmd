@@ -1,39 +1,43 @@
 flowchart LR
   subgraph SDR[SDR]
     direction LR
-    generate([Generate Brief])
-    edit([Edit Brief<br/>Reorder • Remove • Add notes]) --> choice{Delivery Choice}
+    open([Open Meeting Brief])
+    source{Choose Starting Point}
+    blank([Start Blank Brief])
+    edit([Edit Brief<br/>Edit • Reorder • Remove • Add])
+    add([Add a Section])
+    review([Complete Brief Review])
+    more([Complete Remaining Tasks])
+    confirm([Confirm Meeting Readiness])
+    mark([Mark Meeting Ready])
   end
-  subgraph SYS[System]
+  subgraph SYS[Prototype System]
     direction LR
-    draft([Keep Draft])
-    notify([Notify AE])
-    shared_status([Brief Shared])
-    draft_status([Brief Draft])
+    sections{At Least 1 Section?}
+    readiness{All 5 Conditions Complete?}
+    demo([Optional Demo Actions<br/>Copy • Share preview • Export])
+    noeffect([No Effect on Readiness<br/>No external send or export])
     ready([Meeting Ready])
   end
-  subgraph AI[AI / Orchestration]
+  subgraph AI[Demonstration Automation]
     direction LR
-    assemble([Assemble Draft])
+    generated([Generate Draft<br/>Full or partial])
+    auto([Open Auto-created Draft<br/>At 100% research])
   end
-  subgraph EXT[External Data]
-    direction LR
-    notion([Copy into Notion])
-    share([Share with AE])
-    export([Export])
-  end
-  generate --> assemble --> edit
-  choice -- Copy --> notion --> shared_status
-  choice -- Share --> share --> notify --> shared_status
-  choice -- Export --> export --> shared_status
-  choice -- Draft --> draft --> draft_status
-  shared_status --> ready
-  draft_status --> ready
-  class generate,edit,notify,assemble action;
-  class choice decision;
-  class notion,share,export external;
-  class draft,draft_status secondary;
-  class shared_status,ready status;
+  open --> source
+  source -- Generate --> generated --> edit
+  source -- Research complete --> auto --> edit
+  source -- Blank --> blank --> edit
+  edit --> sections
+  sections -- No --> add --> edit
+  sections -- Yes --> review --> readiness
+  readiness -- No --> more -->|Recheck| readiness
+  readiness -- Yes --> confirm --> mark --> ready
+  edit -. Optional .-> demo -.-> noeffect
+  class open,blank,edit,add,review,more,confirm,mark,generated,auto action;
+  class source,sections,readiness decision;
+  class demo,noeffect secondary;
+  class ready status;
 classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
 classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
 classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;

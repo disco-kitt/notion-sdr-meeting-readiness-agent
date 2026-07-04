@@ -21,6 +21,10 @@ Scope: release-candidate quality for the Notion Sales Agent Build Challenge prot
 - [x] Overview and brief note fields relied on placeholder text as their only accessible name. Both now have explicit accessible labels.
 - [x] Sidebar selection was visual-only for assistive technology. Active destinations now expose `aria-current="page"`.
 - [x] Overlapping toast timers could dismiss a newer status message early. New messages now replace and reset the active timer safely.
+- [x] Brief reordering was pointer-only. Every section now has contextual Move up/Move down controls, boundary states, and a polite live position announcement.
+- [x] Progress and repeated edit controls lacked sufficient context in earlier evaluations. Research/reflection progress and brief/assumption controls now expose contextual accessible names.
+- [x] Stakeholder roles were previously group-confirmed without correction. Each person now has an editable role, an Unknown state, and changed/unverified feedback.
+- [x] Mobile tabs previously hid later sections without a cue. Active tabs scroll into view and a More affordance reveals remaining destinations.
 
 ## Cosmetic
 

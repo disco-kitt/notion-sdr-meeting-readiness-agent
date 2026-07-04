@@ -1,107 +1,122 @@
 <?xml version='1.0' encoding='utf-8'?>
-<mxfile host="app.diagrams.net" modified="2026-07-02T21:03:30Z" agent="Codex" version="24.7.17" type="device">
+<mxfile host="app.diagrams.net" modified="2026-07-04T01:56:53Z" agent="Codex" version="24.7.17" type="device">
   <diagram id="05-flow-8-post-meeting-reflection" name="Flow 8: Post-Meeting Reflection">
-    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1274" math="0" shadow="0">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2380" pageHeight="1274" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="title" value="Flow 8: Post-Meeting Reflection" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=24;fontStyle=1;fontColor=#2F3437;fontFamily=Helvetica;" vertex="1" parent="1">
-          <mxGeometry x="20" y="14" width="1920" height="34" as="geometry" />
+          <mxGeometry x="20" y="14" width="2300" height="34" as="geometry" />
         </mxCell>
-        <mxCell id="subtitle" value="Capture learning, control CRM changes, improve future guidance" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontColor=#6B7280;fontFamily=Helvetica;" vertex="1" parent="1">
-          <mxGeometry x="20" y="48" width="1920" height="24" as="geometry" />
+        <mxCell id="subtitle" value="Current separate Lumon sample workflow with session-only CRM review" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontColor=#6B7280;fontFamily=Helvetica;" vertex="1" parent="1">
+          <mxGeometry x="20" y="48" width="2300" height="24" as="geometry" />
         </mxCell>
         <mxCell id="lane-sdr" value="SDR" style="swimlane;horizontal=0;startSize=46;fillColor=#F7F7F5;swimlaneFillColor=#FFFFFF;strokeColor=#D3D1CB;fontStyle=1;fontSize=14;fontColor=#2F3437;rounded=1;arcSize=6;collapsible=0;html=1;whiteSpace=wrap;fontFamily=Helvetica;" vertex="1" parent="1">
-          <mxGeometry x="20" y="84" width="1960" height="276" as="geometry" />
+          <mxGeometry x="20" y="84" width="2340" height="276" as="geometry" />
         </mxCell>
         <mxCell id="lane-system" value="System" style="swimlane;horizontal=0;startSize=46;fillColor=#EEF4FF;swimlaneFillColor=#FFFFFF;strokeColor=#9DBCFB;fontStyle=1;fontSize=14;fontColor=#2F3437;rounded=1;arcSize=6;collapsible=0;html=1;whiteSpace=wrap;fontFamily=Helvetica;" vertex="1" parent="1">
-          <mxGeometry x="20" y="360" width="1960" height="276" as="geometry" />
+          <mxGeometry x="20" y="360" width="2340" height="276" as="geometry" />
         </mxCell>
         <mxCell id="lane-ai" value="AI / Orchestration" style="swimlane;horizontal=0;startSize=46;fillColor=#F4EEFF;swimlaneFillColor=#FFFFFF;strokeColor=#BEA7E5;fontStyle=1;fontSize=14;fontColor=#2F3437;rounded=1;arcSize=6;collapsible=0;html=1;whiteSpace=wrap;fontFamily=Helvetica;" vertex="1" parent="1">
-          <mxGeometry x="20" y="636" width="1960" height="276" as="geometry" />
+          <mxGeometry x="20" y="636" width="2340" height="276" as="geometry" />
         </mxCell>
         <mxCell id="lane-external" value="External Data" style="swimlane;horizontal=0;startSize=46;fillColor=#FFF4E5;swimlaneFillColor=#FFFFFF;strokeColor=#E7B86E;fontStyle=1;fontSize=14;fontColor=#2F3437;rounded=1;arcSize=6;collapsible=0;html=1;whiteSpace=wrap;fontFamily=Helvetica;" vertex="1" parent="1">
-          <mxGeometry x="20" y="912" width="1960" height="276" as="geometry" />
+          <mxGeometry x="20" y="912" width="2340" height="276" as="geometry" />
         </mxCell>
-        <mxCell id="meeting_end" value="Meeting Ends" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFF8EE;strokeColor=#C8872E;strokeWidth=1.5;fontColor=#62420F;" vertex="1" parent="lane-external">
-          <mxGeometry x="70" y="38" width="158" height="54" as="geometry" />
+        <mxCell id="open" value="&lt;b&gt;Open Lumon Debrief&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#6B7280&quot;&gt;Sidebar or More actions&lt;/font&gt;" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="70" y="38" width="174" height="66" as="geometry" />
         </mxCell>
-        <mxCell id="prompt" value="Reflection Prompt" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-system">
-          <mxGeometry x="260" y="38" width="158" height="54" as="geometry" />
+        <mxCell id="record" value="&lt;b&gt;Review or Edit Reflection&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#6B7280&quot;&gt;Priorities • Risks • Next steps&lt;/font&gt;" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="260" y="38" width="190" height="66" as="geometry" />
         </mxCell>
-        <mxCell id="record" value="&lt;b&gt;Record Reflection&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#6B7280&quot;&gt;Priorities • Objections • Next steps&lt;/font&gt;" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
-          <mxGeometry x="450" y="38" width="176" height="66" as="geometry" />
+        <mxCell id="label" value="&lt;b&gt;Label 3 Assumptions&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#6B7280&quot;&gt;Correct • Incorrect • Unknown&lt;/font&gt;" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="450" y="38" width="180" height="66" as="geometry" />
         </mxCell>
-        <mxCell id="label" value="&lt;b&gt;Label Assumptions&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#6B7280&quot;&gt;Correct • Incorrect • Unknown&lt;/font&gt;" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
-          <mxGeometry x="640" y="38" width="176" height="66" as="geometry" />
+        <mxCell id="all" value="All 3 Labeled?" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rhombus;perimeter=rhombusPerimeter;fillColor=#FFF3BF;strokeColor=#B7791F;strokeWidth=1.5;fontColor=#5F3B00;fontStyle=1;" vertex="1" parent="lane-system">
+          <mxGeometry x="640" y="38" width="130" height="84" as="geometry" />
         </mxCell>
-        <mxCell id="crm_draft" value="Draft CRM Updates" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-ai">
-          <mxGeometry x="830" y="38" width="170" height="54" as="geometry" />
+        <mxCell id="crm" value="&lt;b&gt;Review CRM Draft&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#6B7280&quot;&gt;Session-only sample data&lt;/font&gt;" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="830" y="38" width="172" height="66" as="geometry" />
         </mxCell>
-        <mxCell id="review" value="Review CRM Draft" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rhombus;perimeter=rhombusPerimeter;fillColor=#FFF3BF;strokeColor=#B7791F;strokeWidth=1.5;fontColor=#5F3B00;fontStyle=1;" vertex="1" parent="lane-sdr">
-          <mxGeometry x="1020" y="38" width="136" height="84" as="geometry" />
+        <mxCell id="resolve" value="Resolve CRM Draft" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rhombus;perimeter=rhombusPerimeter;fillColor=#FFF3BF;strokeColor=#B7791F;strokeWidth=1.5;fontColor=#5F3B00;fontStyle=1;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="1020" y="38" width="142" height="84" as="geometry" />
         </mxCell>
-        <mxCell id="approve" value="Approve" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
-          <mxGeometry x="1210" y="38" width="158" height="54" as="geometry" />
+        <mxCell id="edit" value="Edit Fields and Finish" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="1210" y="106" width="184" height="54" as="geometry" />
         </mxCell>
-        <mxCell id="edit" value="Edit" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
-          <mxGeometry x="1210" y="106" width="158" height="54" as="geometry" />
+        <mxCell id="approve" value="Approve Demo Draft" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="1210" y="38" width="178" height="54" as="geometry" />
         </mxCell>
-        <mxCell id="discard" value="Discard" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#F3F4F6;strokeColor=#8A9099;strokeWidth=1.25;fontColor=#40454C;" vertex="1" parent="lane-sdr">
+        <mxCell id="discard" value="Discard Draft" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#F3F4F6;strokeColor=#8A9099;strokeWidth=1.25;fontColor=#40454C;" vertex="1" parent="lane-sdr">
           <mxGeometry x="1210" y="174" width="158" height="54" as="geometry" />
         </mxCell>
-        <mxCell id="apply" value="Apply CRM Updates" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFF8EE;strokeColor=#C8872E;strokeWidth=1.5;fontColor=#62420F;" vertex="1" parent="lane-external">
-          <mxGeometry x="1400" y="38" width="158" height="54" as="geometry" />
+        <mxCell id="feedback" value="&lt;b&gt;Show Learning Feedback&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#6B7280&quot;&gt;No external system changed&lt;/font&gt;" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-ai">
+          <mxGeometry x="1400" y="38" width="184" height="66" as="geometry" />
         </mxCell>
-        <mxCell id="revise" value="Revise CRM Draft" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-ai">
-          <mxGeometry x="1400" y="106" width="158" height="54" as="geometry" />
+        <mxCell id="discarded" value="&lt;b&gt;Draft Discarded&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#6B7280&quot;&gt;May restore before completion&lt;/font&gt;" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#F3F4F6;strokeColor=#8A9099;strokeWidth=1.25;fontColor=#40454C;" vertex="1" parent="lane-system">
+          <mxGeometry x="1400" y="174" width="158" height="66" as="geometry" />
         </mxCell>
-        <mxCell id="discarded" value="Discard CRM Draft" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#F3F4F6;strokeColor=#8A9099;strokeWidth=1.25;fontColor=#40454C;" vertex="1" parent="lane-system">
-          <mxGeometry x="1400" y="174" width="158" height="54" as="geometry" />
+        <mxCell id="resolved" value="CRM Draft Resolved?" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rhombus;perimeter=rhombusPerimeter;fillColor=#FFF3BF;strokeColor=#B7791F;strokeWidth=1.5;fontColor=#5F3B00;fontStyle=1;" vertex="1" parent="lane-system">
+          <mxGeometry x="1590" y="106" width="146" height="84" as="geometry" />
         </mxCell>
-        <mxCell id="refine" value="Refine Future Recommendations" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=18;fillColor=#EAF7EE;strokeColor=#3B8C5A;strokeWidth=1.5;fontColor=#205C38;fontStyle=1;" vertex="1" parent="lane-ai">
-          <mxGeometry x="1590" y="106" width="194" height="54" as="geometry" />
+        <mxCell id="complete" value="Complete Reflection" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=16;fillColor=#FFFFFF;strokeColor=#2F3437;strokeWidth=1.5;fontColor=#2F3437;shadow=0;" vertex="1" parent="lane-sdr">
+          <mxGeometry x="1780" y="106" width="176" height="54" as="geometry" />
         </mxCell>
-        <mxCell id="edge-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="meeting_end" target="prompt">
+        <mxCell id="done" value="&lt;b&gt;Reflection Complete&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#6B7280&quot;&gt;Fields lock; nav badge updates&lt;/font&gt;" style="html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontFamily=Helvetica;spacing=8;rounded=1;arcSize=18;fillColor=#EAF7EE;strokeColor=#3B8C5A;strokeWidth=1.5;fontColor=#205C38;fontStyle=1;" vertex="1" parent="lane-system">
+          <mxGeometry x="1970" y="106" width="176" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="open" target="record">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="prompt" target="record">
+        <mxCell id="edge-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="record" target="label">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="record" target="label">
+        <mxCell id="edge-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="label" target="all">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="label" target="crm_draft">
+        <mxCell id="edge-4" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="all" target="label">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="crm_draft" target="review">
+        <mxCell id="edge-5" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="all" target="crm">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-6" value="Approve" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="review" target="approve">
+        <mxCell id="edge-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="crm" target="resolve">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-7" value="Edit" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="review" target="edit">
+        <mxCell id="edge-7" value="Edit" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="resolve" target="edit">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-8" value="Discard" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="review" target="discard">
+        <mxCell id="edge-8" value="Done" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="edit" target="crm">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="approve" target="apply">
+        <mxCell id="edge-9" value="Approve" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="resolve" target="approve">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="edit" target="revise">
+        <mxCell id="edge-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="approve" target="feedback">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-11" value="Review again" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="revise" target="review">
+        <mxCell id="edge-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="feedback" target="resolved">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="discard" target="discarded">
+        <mxCell id="edge-12" value="Discard" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="resolve" target="discard">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="apply" target="refine">
+        <mxCell id="edge-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="discard" target="discarded">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="edge-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="discarded" target="refine">
+        <mxCell id="edge-14" value="Restore" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=5 4;" edge="1" parent="1" source="discarded" target="crm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-15" value="Keep discarded" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="discarded" target="resolved">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-16" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="resolved" target="crm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-17" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="resolved" target="complete">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#68707A;strokeWidth=1.75;fontSize=12;fontStyle=1;fontColor=#4B5563;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="complete" target="done">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>

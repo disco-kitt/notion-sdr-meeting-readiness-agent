@@ -1,5 +1,11 @@
 # Sprint 2 User Flows — Mermaid Source
 
+These diagrams document the release-candidate prototype. Research, sharing, export, and CRM actions are simulated with sample data unless stated otherwise.
+
+Meeting readiness has five conditions: research reaches 100%, priority signals are reviewed, stakeholders are confirmed, at least three discovery questions are selected, and a generated non-empty brief is reviewed. The user may work across tabs in any order; after all five conditions are complete, they separately confirm **Mark meeting ready**. Copy, share-preview, export, and reflection CRM actions do not make a meeting ready.
+
+Post-meeting reflection is implemented as a separate Lumon sample debrief. It does not write to Salesforce or persist beyond the current prototype session.
+
 Each block can be pasted into draw.io via **Arrange → Insert → Advanced → Mermaid**.
 
 ## Master Journey Map
@@ -8,28 +14,27 @@ Each block can be pasted into draw.io via **Arrange → Insert → Advanced → 
 flowchart LR
   subgraph SDR[SDR]
     direction LR
-    overview([Overview]) --> signals([Signals]) --> stakeholders([Stakeholders]) --> questions([Discovery Questions]) --> recommendations([Recommendations]) --> brief([Meeting Brief])
-    reflection([Post-Meeting Reflection])
+    workspace([Workspace Opens]) --> tasks([Complete Readiness Work<br/>Flexible order across tabs]) --> brief_review([Review Meeting Brief])
+    continue([Continue Preparation])
+    confirm([Mark Meeting Ready])
   end
-  subgraph SYS[System]
+  subgraph SYS[Prototype System]
     direction LR
-    detected([Meeting Detected])
+    detected([Meeting Detected<br/>Prototype scenario])
+    all_ready{All 5 Conditions Complete?}
+    ready([Meeting Ready])
   end
-  subgraph AI[AI / Orchestration]
+  subgraph AI[Demonstration Automation]
     direction LR
-    research([Research Initiated])
+    research([Simulated Research Begins<br/>Sample data • Timed progress])
   end
-  subgraph EXT[External Data]
-    direction LR
-    calendar([Calendar])
-    meeting([Meeting])
-    crm([CRM Update])
-  end
-  calendar --> detected --> research --> overview
-  brief --> meeting --> reflection --> crm
-  class overview,signals,stakeholders,questions,recommendations,brief,reflection,detected,research action;
-  class calendar,meeting external;
-  class crm status;
+  detected --> research --> workspace
+  brief_review --> all_ready
+  all_ready -- No --> continue -->|Choose any incomplete task| tasks
+  all_ready -- Yes --> confirm --> ready
+  class workspace,tasks,brief_review,continue,confirm,detected,research action;
+  class all_ready decision;
+  class ready status;
 classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
 classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
 classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;
@@ -43,34 +48,40 @@ classDef secondary fill:#F3F4F6,stroke:#8A9099,stroke-width:1.25px,color:#40454C
 flowchart LR
   subgraph SDR[SDR]
     direction LR
-    workspace([Open Workspace]) --> overview([Review Overview]) --> signals([Review Signals]) --> stakeholders([Review Stakeholders]) --> questions([Select Questions]) --> recommendations([Review Recommendations])
-    notes([Add Notes]) --> share_decision{Share with AE?}
+    workspace([Open Meeting Workspace])
+    choose{Choose Any Incomplete Task}
+    signals([Review Priority Signals])
+    stakeholders([Confirm Stakeholders])
+    questions([Select at Least 3 Questions])
+    brief([Generate and Review Brief<br/>Must contain a section])
+    mark_ready([Mark Meeting Ready])
   end
-  subgraph SYS[System]
+  subgraph SYS[Prototype System]
     direction LR
-    identify([Identify Company & Attendees<br/>Match CRM record])
-    share([Share with AE])
-    draft([Keep Draft])
+    meeting([Sample Meeting Available<br/>Simulates meeting detection])
+    panel([Readiness Panel<br/>Shows progress and next step])
+    readiness{All 5 Conditions Complete?}
+    draft([Remain in Preparation])
     ready([Meeting Ready])
   end
-  subgraph AI[AI / Orchestration]
+  subgraph AI[Demonstration Automation]
     direction LR
-    research([Start Research])
-    brief([Generate Brief])
+    research([Simulated Research Starts])
+    research_complete([Research Reaches 100%])
   end
-  subgraph EXT[External Data]
-    direction LR
-    meeting([Meeting Appears])
-  end
-  meeting --> identify --> research --> workspace
-  recommendations --> brief --> notes
-  share_decision -- Yes --> share --> ready
-  share_decision -- No --> draft --> ready
-  class workspace,overview,signals,stakeholders,questions,recommendations,notes,identify,share,research,brief action;
-  class share_decision decision;
-  class meeting external;
+  meeting --> research --> workspace --> panel --> choose
+  research -->|Runs in background| research_complete
+  choose -- Signals --> signals --> readiness
+  choose -- People --> stakeholders --> readiness
+  choose -- Questions --> questions --> readiness
+  choose -- Brief --> brief --> readiness
+  research_complete --> readiness
+  readiness -- No --> draft -->|Continue in any order| choose
+  readiness -- Yes --> mark_ready --> ready
+  class workspace,signals,stakeholders,questions,brief,mark_ready,meeting,panel,research action;
+  class choose,readiness decision;
   class draft secondary;
-  class ready status;
+  class research_complete,ready status;
 classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
 classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
 classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;
@@ -84,30 +95,37 @@ classDef secondary fill:#F3F4F6,stroke:#8A9099,stroke-width:1.25px,color:#40454C
 flowchart LR
   subgraph SDR[SDR]
     direction LR
-    workspace([Open Partial Workspace])
+    start([Open Workspace at 46%])
+    partial([Use Available Tabs<br/>Review revealed sample data])
+    draft([Generate Partial Draft<br/>Optional])
+    prep([Continue Readiness Tasks])
   end
-  subgraph SYS[System]
+  subgraph SYS[Prototype System]
     direction LR
-    detected([Meeting Detected])
-    states([Show Card States<br/>Loading • Complete • Updating])
-    ready([Workspace Ready])
+    banner([Show Research Banner<br/>Progress • Sample activity])
+    impact{Progress Reaches 78%?}
+    toast([Show High-Impact Toast<br/>Recommendations updated])
+    complete{Progress Reaches 100%?}
+    ready([Research Gate Complete])
+    restart([Restart Demo to 46%])
   end
-  subgraph AI[AI / Orchestration]
+  subgraph AI[Demonstration Automation]
     direction LR
-    research([Research Begins])
-    populate([Populate Results Live]) --> impact{High-Impact Insight?}
-    refresh([Refresh Brief])
-    continue([Continue Research])
-    complete([Research Complete])
+    advance([Advance Timed Progress<br/>No live integrations])
+    continue([Continue Timed Progress])
+    auto([Create Brief Draft<br/>If not already generated])
   end
-  detected --> research --> workspace --> states --> populate
-  impact -- Yes --> refresh --> complete
-  impact -- No --> continue --> complete
-  complete --> ready
-  class workspace,detected,states,research,populate,refresh action;
-  class impact decision;
-  class continue secondary;
-  class complete,ready status;
+  start --> banner --> partial --> advance --> impact
+  partial -. Optional .-> draft
+  impact -- Yes --> toast --> complete
+  impact -- No --> complete
+  complete -- No --> continue --> advance
+  complete -- Yes --> auto --> ready --> prep
+  ready -. Demo control .-> restart --> banner
+  class start,partial,prep,banner,toast,advance,auto action;
+  class impact,complete decision;
+  class draft,continue,restart secondary;
+  class ready status;
 classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
 classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
 classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;
@@ -115,45 +133,49 @@ classDef external fill:#FFF8EE,stroke:#C8872E,stroke-width:1.5px,color:#62420F;
 classDef secondary fill:#F3F4F6,stroke:#8A9099,stroke-width:1.25px,color:#40454C;
 ```
 
-## Flow 7: Build and Share Meeting Brief
+## Flow 7: Build and Review a Meeting Brief
 
 ```mermaid
 flowchart LR
   subgraph SDR[SDR]
     direction LR
-    generate([Generate Brief])
-    edit([Edit Brief<br/>Reorder • Remove • Add notes]) --> choice{Delivery Choice}
+    open([Open Meeting Brief])
+    source{Choose Starting Point}
+    blank([Start Blank Brief])
+    edit([Edit Brief<br/>Edit • Reorder • Remove • Add])
+    add([Add a Section])
+    review([Complete Brief Review])
+    more([Complete Remaining Tasks])
+    confirm([Confirm Meeting Readiness])
+    mark([Mark Meeting Ready])
   end
-  subgraph SYS[System]
+  subgraph SYS[Prototype System]
     direction LR
-    draft([Keep Draft])
-    notify([Notify AE])
-    shared_status([Brief Shared])
-    draft_status([Brief Draft])
+    sections{At Least 1 Section?}
+    readiness{All 5 Conditions Complete?}
+    demo([Optional Demo Actions<br/>Copy • Share preview • Export])
+    noeffect([No Effect on Readiness<br/>No external send or export])
     ready([Meeting Ready])
   end
-  subgraph AI[AI / Orchestration]
+  subgraph AI[Demonstration Automation]
     direction LR
-    assemble([Assemble Draft])
+    generated([Generate Draft<br/>Full or partial])
+    auto([Open Auto-created Draft<br/>At 100% research])
   end
-  subgraph EXT[External Data]
-    direction LR
-    notion([Copy into Notion])
-    share([Share with AE])
-    export([Export])
-  end
-  generate --> assemble --> edit
-  choice -- Copy --> notion --> shared_status
-  choice -- Share --> share --> notify --> shared_status
-  choice -- Export --> export --> shared_status
-  choice -- Draft --> draft --> draft_status
-  shared_status --> ready
-  draft_status --> ready
-  class generate,edit,notify,assemble action;
-  class choice decision;
-  class notion,share,export external;
-  class draft,draft_status secondary;
-  class shared_status,ready status;
+  open --> source
+  source -- Generate --> generated --> edit
+  source -- Research complete --> auto --> edit
+  source -- Blank --> blank --> edit
+  edit --> sections
+  sections -- No --> add --> edit
+  sections -- Yes --> review --> readiness
+  readiness -- No --> more -->|Recheck| readiness
+  readiness -- Yes --> confirm --> mark --> ready
+  edit -. Optional .-> demo -.-> noeffect
+  class open,blank,edit,add,review,more,confirm,mark,generated,auto action;
+  class source,sections,readiness decision;
+  class demo,noeffect secondary;
+  class ready status;
 classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
 classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
 classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;
@@ -167,38 +189,41 @@ classDef secondary fill:#F3F4F6,stroke:#8A9099,stroke-width:1.25px,color:#40454C
 flowchart LR
   subgraph SDR[SDR]
     direction LR
-    record([Record Reflection<br/>Priorities • Objections • Next steps]) --> label([Label Assumptions<br/>Correct • Incorrect • Unknown])
-    review{Review CRM Draft}
-    approve([Approve])
-    edit([Edit])
-    discard([Discard])
+    open([Open Lumon Debrief<br/>Sidebar or More actions])
+    record([Review or Edit Reflection<br/>Priorities • Risks • Next steps])
+    label([Label 3 Assumptions<br/>Correct • Incorrect • Unknown])
+    crm([Review CRM Draft<br/>Session-only sample data])
+    resolve{Resolve CRM Draft}
+    edit([Edit Fields and Finish])
+    approve([Approve Demo Draft])
+    discard([Discard Draft])
+    complete([Complete Reflection])
   end
-  subgraph SYS[System]
+  subgraph SYS[Prototype System]
     direction LR
-    prompt([Reflection Prompt])
-    discarded([Discard CRM Draft])
+    all{All 3 Labeled?}
+    discarded([Draft Discarded<br/>May restore before completion])
+    resolved{CRM Draft Resolved?}
+    done([Reflection Complete<br/>Fields lock • Nav badge updates])
   end
-  subgraph AI[AI / Orchestration]
+  subgraph AI[Demonstration Automation]
     direction LR
-    crm_draft([Draft CRM Updates])
-    revise([Revise CRM Draft])
-    refine([Refine Future Recommendations])
+    feedback([Show Learning Feedback<br/>No external system changed])
   end
-  subgraph EXT[External Data]
-    direction LR
-    meeting_end([Meeting Ends])
-    apply([Apply CRM Updates])
-  end
-  meeting_end --> prompt --> record
-  label --> crm_draft --> review
-  review -- Approve --> approve --> apply --> refine
-  review -- Edit --> edit --> revise -->|Review again| review
-  review -- Discard --> discard --> discarded --> refine
-  class record,label,approve,edit,prompt,crm_draft,revise action;
-  class review decision;
-  class meeting_end,apply external;
+  open --> record --> label --> all
+  all -- No --> label
+  all -- Yes --> crm --> resolve
+  resolve -- Edit --> edit -->|Done| crm
+  resolve -- Approve --> approve --> feedback --> resolved
+  resolve -- Discard --> discard --> discarded
+  discarded -. Restore .-> crm
+  discarded -->|Keep discarded| resolved
+  resolved -- No --> crm
+  resolved -- Yes --> complete --> done
+  class open,record,label,crm,edit,approve,complete,feedback action;
+  class all,resolve,resolved decision;
   class discard,discarded secondary;
-  class refine status;
+  class done status;
 classDef action fill:#FFFFFF,stroke:#2F3437,stroke-width:1.5px,color:#2F3437;
 classDef decision fill:#FFF3BF,stroke:#B7791F,stroke-width:1.5px,color:#5F3B00;
 classDef status fill:#EAF7EE,stroke:#3B8C5A,stroke-width:1.5px,color:#205C38;
